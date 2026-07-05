@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Equipment - RPLMS</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <div class="app-container">
+
+        <!-- SIDEBAR -->
+        <aside class="sidebar"></aside>
+
+        <!-- MAIN PANEL -->
+        <main class="main-content">
+
+            <!-- HEADER -->
+            <header class="header">
+                <div class="header-left">
+                    <button class="sidebar-toggle" id="sidebarToggleBtn">&#9776;</button>
+                    <div class="page-title-area">
+                        <h1 class="page-title" id="pageMainTitle">Edit Equipment</h1>
+                        <ul class="breadcrumbs">
+                            <li><a href="inventory.html">Inventory Management</a></li>
+                            <li>Inventory Details</li>
+                            <li id="breadcrumbActionName">Edit Equipment</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="header-right">
+                    <button class="header-icon-btn">
+                        <span class="icon">&#128276;</span>
+                        <span class="icon-badge">3</span>
+                    </button>
+                    <div class="header-date-widget"></div>
+                </div>
+            </header>
+
+            <!-- CONTENT BODY -->
+            <div class="page-content-wrapper">
+
+                <!-- FORM CONTAINER CARD -->
+                <div class="content-card">
+                    <div class="card-header-icon">
+                        <div class="circle-icon-wrapper">
+                            <!-- Inline icon of a folder/check page -->
+                            &#10065;
+                        </div>
+                        <div class="card-header-text">
+                            <span class="card-title">Equipment Information</span>
+                            <span class="card-subtitle" id="formSubtitle">Update the equipment details below.</span>
+                        </div>
+                    </div>
+
+                    <form id="equipmentForm" novalidate>
+                        <!-- Hidden input for ID -->
+                        <input type="hidden" name="id" id="equipId">
+
+                        <div class="form-grid">
+
+                            <!-- Equipment Name -->
+                            <div class="form-group form-group-two-cols">
+                                <label class="form-label" for="name">Equipment Name <span
+                                        class="required-star">*</span></label>
+                                <input type="text" id="name" name="name" class="form-control"
+                                    placeholder="e.g. 3D Printer">
+                            </div>
+
+                            <!-- Machine Type -->
+                            <div class="form-group">
+                                <label class="form-label" for="type">Machine Type <span
+                                        class="required-star">*</span></label>
+                                <select id="type" name="type" class="form-control">
+                                    <option value="">Select type</option>
+                                    <option value="Equipment">Equipment</option>
+                                    <option value="Component">Component</option>
+                                </select>
+                            </div>
+
+                            <!-- Manufacturer -->
+                            <div class="form-group">
+                                <label class="form-label" for="manufacturer">Manufacturer <span
+                                        class="required-star">*</span></label>
+                                <input type="text" id="manufacturer" name="manufacturer" class="form-control"
+                                    placeholder="e.g. Creality">
+                            </div>
+
+                            <!-- Model Number -->
+                            <div class="form-group">
+                                <label class="form-label" for="model">Model Number</label>
+                                <input type="text" id="model" name="model" class="form-control"
+                                    placeholder="e.g. Ender-3 V2">
+                            </div>
+
+                            <!-- Serial Number -->
+                            <div class="form-group">
+                                <label class="form-label" for="serial">Serial Number</label>
+                                <input type="text" id="serial" name="serial" class="form-control"
+                                    placeholder="e.g. CRL-3DV2-2024-1125">
+                            </div>
+
+                            <!-- Location -->
+                            <div class="form-group form-group-full">
+                                <label class="form-label" for="location">Location <span
+                                        class="required-star">*</span></label>
+                                <input type="text" id="location" name="location" class="form-control"
+                                    placeholder="e.g. Mechanical Lab">
+                            </div>
+
+                            <!-- Status -->
+                            <div class="form-group">
+                                <label class="form-label" for="status">Status <span
+                                        class="required-star">*</span></label>
+                                <select id="status" name="status" class="form-control">
+                                    <option value="Available">Available</option>
+                                    <option value="Maintenance">Maintenance</option>
+                                    <option value="Repairing">Repairing</option>
+                                    <option value="Borrowed">Borrowed</option>
+                                </select>
+                            </div>
+
+                            <!-- Date Added -->
+                            <div class="form-group">
+                                <label class="form-label" for="dateAdded">Date Added</label>
+                                <!-- type="date" displays local calendar controls -->
+                                <input type="date" id="dateAdded" name="dateAdded" class="form-control">
+                            </div>
+
+                            <!-- Description -->
+                            <div class="form-group form-group-full">
+                                <label class="form-label" for="description">Description (Optional)</label>
+                                <textarea id="description" name="description" class="form-control" rows="4"
+                                    placeholder="FDM 3D printer used for rapid prototyping..."
+                                    style="resize:vertical;"></textarea>
+                            </div>
+
+                        </div>
+
+                        <!-- Buttons bar -->
+                        <div class="form-actions">
+                            <!-- Cancel is a reset button so it triggers our custom confirm cancel window! -->
+                            <button type="button" class="btn btn-secondary" id="cancelFormBtn">
+                                &times; Cancel
+                            </button>
+                            <button type="submit" class="btn btn-primary" id="submitFormBtn">
+                                &#128190; Update Equipment
+                            </button>
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+            <!-- FOOTER -->
+            <footer class="page-footer">
+                &copy; 2025 RPLMS - Rapid Prototyping Lab Management System. All rights reserved.
+            </footer>
+
+        </main>
+
+    </div>
+
+    <script src="js/common.js"></script>
+    <script src="js/validation.js"></script>
+    <script>
+        renderBaseLayout("inventory");
+
+        document.addEventListener("DOMContentLoaded", () => {
+            const db = getDB();
+            const params = new URLSearchParams(window.location.search);
+            const itemId = params.get("id");
+            const isNew = params.get("action") === "new" || !itemId;
+
+            const formMainTitle = document.querySelector(".page-title") || document.getElementById("pageMainTitle");
+            const breadcrumbActionName = document.getElementById("breadcrumbActionName");
+            const formSubtitle = document.getElementById("formSubtitle");
+            const submitFormBtn = document.getElementById("submitFormBtn");
+
+            // Load form details if edit action
+            let currentItem = null;
+            if (!isNew) {
+                currentItem = db.inventory.find(item => item.id === itemId);
+                if (currentItem) {
+                    if (formMainTitle) formMainTitle.textContent = "Edit Equipment";
+                    if (breadcrumbActionName) breadcrumbActionName.textContent = "Edit Equipment";
+                    if (formSubtitle) formSubtitle.textContent = "Update the equipment details below.";
+                    if (submitFormBtn) submitFormBtn.innerHTML = `&#128190; Update Equipment`;
+
+                    // Populate values
+                    document.getElementById("equipId").value = currentItem.id;
+                    document.getElementById("name").value = currentItem.name;
+                    document.getElementById("type").value = currentItem.type;
+                    document.getElementById("manufacturer").value = currentItem.manufacturer;
+                    document.getElementById("model").value = currentItem.model || "";
+                    document.getElementById("serial").value = currentItem.serial || "";
+                    document.getElementById("location").value = currentItem.location;
+                    document.getElementById("status").value = currentItem.status;
+                    document.getElementById("dateAdded").value = currentItem.dateAdded;
+                    document.getElementById("description").value = currentItem.description || "";
+                } else {
+                    showToast(`Item ${itemId} not found. Loading new equipment form.`, "warn");
+                    window.history.replaceState({}, '', 'inventory-edit.html?action=new');
+                }
+            }
+
+            if (isNew || !currentItem) {
+                if (formMainTitle) formMainTitle.textContent = "Add Equipment";
+                if (breadcrumbActionName) breadcrumbActionName.textContent = "Add Equipment";
+                if (formSubtitle) formSubtitle.textContent = "Create a new equipment entry in inventory.";
+                if (submitFormBtn) submitFormBtn.innerHTML = `&#65291; Create Equipment`;
+
+                const today = new Date().toISOString().split('T')[0];
+                document.getElementById("dateAdded").value = today;
+
+                const preType = params.get("type");
+                if (preType === "Component" || preType === "Equipment") {
+                    document.getElementById("type").value = preType;
+                    if (formMainTitle) formMainTitle.textContent = `Add ${preType}`;
+                    if (breadcrumbActionName) breadcrumbActionName.textContent = `Add ${preType}`;
+                    if (formSubtitle) formSubtitle.textContent = `Create a new ${preType.toLowerCase()} entry in inventory.`;
+                    if (submitFormBtn) submitFormBtn.innerHTML = `&#65291; Create ${preType}`;
+                }
+            }
+
+            // Schema for validation
+            const schema = {
+                name: { required: true, charLimit: 80, noOnlyNumbers: true },
+                type: { required: true },
+                manufacturer: { required: true, charLimit: 50, noOnlyNumbers: true },
+                location: { required: true, charLimit: 50, noOnlyNumbers: true },
+                status: { required: true },
+                description: { charLimit: 200 }
+            };
+
+            // Construct and bind page validator
+            // Autosave draft key
+            const draftKey = isNew ? "rplms_draft_new_equipment" : `rplms_draft_edit_${itemId}`;
+
+            const validator = new RPLMSFormValidator("equipmentForm", schema, (formData) => {
+                if (isNew) {
+                    // Generate new ID
+                    const nextNum = db.inventory.length + 1;
+                    const nextId = `EQ-${String(nextNum).padStart(3, '0')}`;
+
+                    const newItem = {
+                        id: nextId,
+                        name: formData.name,
+                        type: formData.type,
+                        manufacturer: formData.manufacturer,
+                        model: formData.model || "",
+                        serial: formData.serial || "",
+                        location: formData.location,
+                        status: formData.status,
+                        dateAdded: formData.dateAdded,
+                        description: formData.description || ""
+                    };
+
+                    db.inventory.push(newItem);
+                    setDB(db);
+
+                    showToast(`Equipment ${nextId} created successfully!`, "success");
+                } else {
+                    // Update item in place
+                    const index = db.inventory.findIndex(item => item.id === itemId);
+                    if (index > -1) {
+                        db.inventory[index] = {
+                            ...db.inventory[index],
+                            name: formData.name,
+                            type: formData.type,
+                            manufacturer: formData.manufacturer,
+                            model: formData.model || "",
+                            serial: formData.serial || "",
+                            location: formData.location,
+                            status: formData.status,
+                            dateAdded: formData.dateAdded,
+                            description: formData.description || ""
+                        };
+                        setDB(db);
+                        showToast(`Equipment updated successfully!`, "success");
+                    }
+                }
+
+                setTimeout(() => {
+                    window.location.href = "inventory.html";
+                }, 1000);
+
+            }, draftKey);
+
+            // Cancel button: warn if form is dirty, else go straight back
+            document.getElementById("cancelFormBtn").addEventListener("click", () => {
+                if (validator.isDirty) {
+                    createConfirmationModal(
+                        "Discard Unsaved Changes",
+                        "You have unsaved form entries. Are you sure you want to discard them and return to inventory list?",
+                        () => {
+                            validator.isDirty = false; // reset flag
+                            window.location.href = "inventory.html";
+                        },
+                        "Discard & Exit",
+                        true
+                    );
+                } else {
+                    window.location.href = "inventory.html";
+                }
+            });
+
+        });
+    </script>
+</body>
+
+</html>

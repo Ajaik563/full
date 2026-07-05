@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Technical Faculty Portal</title>
+    <link rel="stylesheet" href="facultystyle.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body data-role="faculty">
+
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-logo">
+            <h1>ILP</h1>
+            <p>Rapid Prototyping Lab</p>
+        </div>
+
+        <div class="portal-title">TECHNICAL FACULTY PORTAL</div>
+
+        <nav class="sidebar-menu">
+            <a href="#" class="active" data-page="dashboard">
+                <span><i class="fa-solid fa-tachometer-alt"></i></span> Dashboard
+            </a>
+
+            <a href="#" data-page="teams">
+                <span><i class="fa-solid fa-users"></i></span> My Teams
+            </a>
+
+            <a href="#" data-page="teamApproval">
+                <span><i class="fa-solid fa-clipboard-list"></i></span> Team Approval
+            </a>
+
+            <a href="#" data-page="componentsRequest">
+                <span><i class="fa-solid fa-box-open"></i></span> Component Request
+            </a>
+
+            <a href="#" data-page="documents">
+                <span><i class="fa-solid fa-file-lines"></i></span> Documents
+            </a>
+
+            <a href="#" data-page="ticketManagement">
+                <span><i class="fa-solid fa-ticket"></i></span> Ticket Management
+            </a>
+
+            <a href="#" data-page="knowledgeBase">
+                <span><i class="fa-solid fa-book"></i></span> Knowledge Base
+            </a>
+
+            <a href="#" data-page="profile">
+                <span><i class="fa-solid fa-user"></i></span> Profile
+            </a>
+        </nav>
+
+        <a href="../login1.html" class="logout" id="logoutLink">
+            <span><i class="fa-solid fa-right-from-bracket"></i></span> Logout
+        </a>
+    </aside>
+
+    <main class="main">
+        <header class="header">
+            <div class="header-left">
+                <button class="menu-btn" id="menuBtn"><i class="fa-solid fa-bars"></i></button>
+                <h2 id="pageTitle">Dashboard</h2>
+            </div>
+
+            <div class="header-right">
+                <div class="notification" id="notificationBell">
+                    <i class="fa-solid fa-bell"></i>
+                    <small id="notifBadge">0</small>
+
+                    <!-- Notification Dropdown -->
+                    <div class="notif-dropdown" id="notifDropdown">
+                        <div class="notif-dropdown-header">
+                            <span>Notifications</span>
+                            <button class="notif-mark-all" id="markAllReadBtn">Mark all read</button>
+                        </div>
+                        <div class="notif-list" id="notifList">
+                            <!-- Dynamically populated -->
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faculty-avatar">F</div>
+
+                <div>
+                    <h4>Dr. Faculty Name</h4>
+                    <p>Technical Faculty</p>
+                </div>
+            </div>
+        </header>
+
+        <section class="content">
+
+            <!-- DASHBOARD -->
+            <section class="page active-page" id="dashboardPage">
+                <div class="page-heading">
+                    <h1>Submission & Document Review Dashboard</h1>
+                    <p>Review team submissions, approve stage documents, reject submissions, and request rework.</p>
+                </div>
+
+                <div class="stats">
+                    <div class="stat-card">
+                        <div class="stat-icon blue"><i class="fa-solid fa-folder-open"></i></div>
+                        <div>
+                            <h3 id="totalTeams">5</h3>
+                            <p>Total Teams</p>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon green"><i class="fa-solid fa-circle-check"></i></div>
+                        <div>
+                            <h3 id="approvedCount">0</h3>
+                            <p>Approved</p>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon orange"><i class="fa-solid fa-hourglass-half"></i></div>
+                        <div>
+                            <h3 id="pendingCount">0</h3>
+                            <p>Pending Review</p>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon red"><i class="fa-solid fa-triangle-exclamation"></i></div>
+                        <div>
+                            <h3 id="rejectedCount">0</h3>
+                            <p>Rejected / Rework</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel">
+                    <div class="panel-title">
+                        <h3>All Teams Overview</h3>
+                    </div>
+
+                    <div class="team-list" id="dashboardTeamList"></div>
+                </div>
+            </section>
+
+            <!-- TEAMS -->
+            <section class="page" id="teamsPage">
+                <div class="page-heading">
+                    <h1>My Teams</h1>
+                    <p>View all 5 teams and review every stage document.</p>
+                </div>
+
+                <div class="top-grid">
+                    <div class="search-card">
+                        <h3>Search by Project ID</h3>
+
+                        <div class="search-box">
+                            <input type="search" id="projectSearch" placeholder="Enter Project ID e.g., PRJ-2025-01">
+                            <button id="searchBtn"><i class="fa-solid fa-magnifying-glass"></i></button>
+                        </div>
+                    </div>
+
+                    <div class="quick-stats">
+                        <div>
+                            <h3>5</h3>
+                            <p>Total Teams</p>
+                        </div>
+
+                        <div>
+                            <h3 id="completedTeamsCount">0</h3>
+                            <p>Completed</p>
+                        </div>
+
+                        <div>
+                            <h3 id="inProgressTeamsCount">5</h3>
+                            <p>In Progress</p>
+                        </div>
+
+                        <div>
+                            <h3 id="notStartedTeamsCount">0</h3>
+                            <p>Not Started</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="team-toolbar">
+                    <button class="btn-secondary" id="backToAllTeamsBtn" style="display:none;">
+                        <i class="fa-solid fa-arrow-left"></i> Back to All Teams
+                    </button>
+                </div>
+
+                <div class="teams-container" id="teamsContainer"></div>
+            </section>
+
+            <!-- DOCUMENTS -->
+            <section class="page" id="documentsPage">
+                <div class="page-heading">
+                    <h1>Documents</h1>
+                    <p>View documents, open submissions, and review uploaded stage files.</p>
+                </div>
+
+                <div class="filter-row">
+                    <input type="search" id="documentSearch" placeholder="Search documents by title, team, project ID...">
+
+                    <select id="teamFilter">
+                        <option value="all">All Teams</option>
+                    </select>
+
+                    <select id="statusFilter">
+                        <option value="all">All Status</option>
+                        <option value="Submitted">Submitted</option>
+                        <option value="Under Review">Under Review</option>
+                        <option value="Approved">Approved</option>
+                        <option value="Rejected">Rejected</option>
+                        <option value="Rework Required">Rework Required</option>
+                        <option value="Locked">Locked</option>
+                    </select>
+
+                    <button class="btn-secondary" id="clearFilterBtn">Clear</button>
+                </div>
+
+                <div class="document-layout">
+                    <div class="panel">
+                        <div class="panel-title">
+                            <h3>Stage Documents</h3>
+                        </div>
+
+                        <div class="table-wrapper">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Project ID</th>
+                                        <th>Team</th>
+                                        <th>Stage</th>
+                                        <th>Document</th>
+                                        <th>Version</th>
+                                        <th>Status</th>
+                                        <th>Uploaded On</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody id="documentsTable"></tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <aside class="side-panel">
+                        <div class="side-card">
+                            <h3>Document Review Overview</h3>
+
+                            <div class="donut-box">
+                                <div class="donut" id="reviewDonut">
+                                    <div>
+                                        <h2 id="donutTotal">0</h2>
+                                        <p>Total</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="legend-list">
+                                <p><span class="dot green-dot"></span> Approved <b id="legendApproved">0</b></p>
+                                <p><span class="dot orange-dot"></span> Pending <b id="legendPending">0</b></p>
+                                <p><span class="dot red-dot"></span> Rejected/Rework <b id="legendRejected">0</b></p>
+                            </div>
+                        </div>
+
+                        <div class="side-card">
+                            <h3>Technical Faculty Permission</h3>
+                            <p>Technical Faculty can view documents, add comments, approve, reject, and request rework.</p>
+                        </div>
+                    </aside>
+                </div>
+            </section>
+
+            <!-- REVIEWS -->
+            <section class="page" id="reviewsPage">
+                <div class="page-heading">
+                    <h1>My Reviews</h1>
+                    <p>Documents awaiting faculty review.</p>
+                </div>
+
+                <div class="panel">
+                    <div class="table-wrapper">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Team</th>
+                                    <th>Project ID</th>
+                                    <th>Stage</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+
+                            <tbody id="reviewTable"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- HISTORY -->
+            <section class="page" id="historyPage">
+                <div class="page-heading">
+                    <h1>Submission History</h1>
+                    <p>Submission date, review date, reviewer, version, and status.</p>
+                </div>
+
+                <div class="panel">
+                    <div class="table-wrapper">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Team</th>
+                                    <th>Stage</th>
+                                    <th>Version</th>
+                                    <th>Submitted Date</th>
+                                    <th>Reviewed Date</th>
+                                    <th>Reviewer</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+
+                            <tbody id="historyTable"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ANALYTICS -->
+            <section class="page" id="analyticsPage">
+                <div class="page-heading">
+                    <h1>Submission Analytics</h1>
+                    <p>Review analytics for all teams.</p>
+                </div>
+
+                <div class="analytics-grid">
+                    <div class="analytics-card">
+                        <h3>Total Stage Records</h3>
+                        <h2 id="analyticsTotalDocs">0</h2>
+                    </div>
+
+                    <div class="analytics-card">
+                        <h3>Approved</h3>
+                        <h2 id="analyticsApprovedDocs">0</h2>
+                    </div>
+
+                    <div class="analytics-card">
+                        <h3>Pending</h3>
+                        <h2 id="analyticsPendingDocs">0</h2>
+                    </div>
+
+                    <div class="analytics-card">
+                        <h3>Rejected/Rework</h3>
+                        <h2 id="analyticsRejectedDocs">0</h2>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TEAM APPROVAL -->
+            <section class="page" id="teamApprovalPage">
+                <div class="page-heading">
+                    <h1>Team Approval</h1>
+                    <p>Review and approve team registration requests before they are assigned to active teams.</p>
+                </div>
+
+                <div class="stats">
+                    <div class="stat-card">
+                        <div class="stat-icon orange"><i class="fa-solid fa-clipboard-question"></i></div>
+                        <div>
+                            <h3 id="approvalPendingCount">0</h3>
+                            <p>Pending Approval</p>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon green"><i class="fa-solid fa-circle-check"></i></div>
+                        <div>
+                            <h3 id="approvalApprovedCount">0</h3>
+                            <p>Total Approved</p>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon red"><i class="fa-solid fa-circle-xmark"></i></div>
+                        <div>
+                            <h3 id="approvalRejectedCount">0</h3>
+                            <p>Total Rejected</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel">
+                    <div class="panel-title">
+                        <h3>Pending Registration Requests</h3>
+                    </div>
+                    <div id="teamApprovalListContainer" style="display:flex; flex-direction:column; gap:24px;">
+                        <!-- Dynamically populated team cards -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- COMPONENTS REQUEST -->
+            <section class="page" id="componentsRequestPage">
+                <div class="page-heading">
+                    <h1>Components Request</h1>
+                    <p>View and manage component/resource requests raised by your teams.</p>
+                </div>
+
+                <div class="stats">
+                    <div class="stat-card">
+                        <div class="stat-icon blue"><i class="fa-solid fa-box-open"></i></div>
+                        <div>
+                            <h3 id="compTotalRequests">0</h3>
+                            <p>Total Requests</p>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon orange"><i class="fa-solid fa-hourglass-half"></i></div>
+                        <div>
+                            <h3 id="compPendingRequests">0</h3>
+                            <p>Pending</p>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon green"><i class="fa-solid fa-circle-check"></i></div>
+                        <div>
+                            <h3 id="compApprovedRequests">0</h3>
+                            <p>Approved</p>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon red"><i class="fa-solid fa-circle-xmark"></i></div>
+                        <div>
+                            <h3 id="compRejectedRequests">0</h3>
+                            <p>Rejected</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="filter-row">
+                    <input type="search" id="compSearch" placeholder="Search by component, team or request ID...">
+
+                    <select id="compTeamFilter">
+                        <option value="all">All Teams</option>
+                    </select>
+
+                    <select id="compStatusFilter">
+                        <option value="all">All Status</option>
+                        <option value="Pending">Pending</option>
+                        <option value="Approved">Approved</option>
+                        <option value="Rejected">Rejected</option>
+                    </select>
+
+                    <button class="btn-secondary" id="compClearFilterBtn">Clear Filters</button>
+                </div>
+
+                <div class="panel">
+                    <div class="table-wrapper">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Request ID</th>
+                                    <th>Team</th>
+                                    <th>Component Requested</th>
+                                    <th>Quantity</th>
+                                    <th>Purpose</th>
+                                    <th>Status</th>
+                                    <th>Requested On</th>
+                                    <th>Deadline</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="componentsRequestsTable">
+                                <!-- Dynamically generated -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TICKET MANAGEMENT -->
+            <section class="page" id="ticketManagementPage">
+                <div class="page-heading">
+                    <h1>Ticket Management</h1>
+                    <p>Students can ask questions and faculty can send feedback.</p>
+                </div>
+
+                <div class="document-layout">
+                    <!-- Student Simulator Panel -->
+                    <div class="panel">
+                        <h3 style="margin-bottom: 15px; color: #003366;">Ask a Question (Student Simulator)</h3>
+                        <form id="studentTicketForm" novalidate>
+                            <div class="form-group" style="margin-bottom: 15px;">
+                                <label for="ticketTeam" style="display:block; margin-bottom:5px; font-weight:700;">Select Team</label>
+                                <select id="ticketTeam" class="form-control" style="width:100%; padding: 10px; border-radius: 8px; border: 1px solid #d0d7de;">
+                                    <!-- Dynamically populated -->
+                                </select>
+                            </div>
+                            
+                            <div class="form-group" style="margin-bottom: 15px;">
+                                <label for="ticketStudentName" style="display:block; margin-bottom:5px; font-weight:700;">Student Name</label>
+                                <input type="text" id="ticketStudentName" class="form-control" placeholder="e.g. Arun Kumar" style="width:100%; padding: 10px; border-radius: 8px; border: 1px solid #d0d7de;">
+                                <div class="error-message" id="ticketStudentNameError" style="color: #f87171; font-size:12px; margin-top:5px; display:none;">Name is required</div>
+                            </div>
+
+                            <div class="form-group" style="margin-bottom: 15px;">
+                                <label for="ticketQuestion" style="display:block; margin-bottom:5px; font-weight:700;">Your Question</label>
+                                <textarea id="ticketQuestion" class="form-control" placeholder="Type your query regarding the prototype or stages..." style="width:100%; min-height:100px; resize:vertical; padding: 10px; border-radius: 8px; border: 1px solid #d0d7de;"></textarea>
+                                <div class="error-message" id="ticketQuestionError" style="color: #f87171; font-size:12px; margin-top:5px; display:none;">Question is required</div>
+                            </div>
+
+                            <button type="submit" class="btn-primary" style="background:#003366; color:white; padding:10px 20px; border:none; border-radius:8px; cursor:pointer; font-weight:bold;">Submit Ticket</button>
+                        </form>
+                    </div>
+
+                    <!-- Tickets List and Reply Panel -->
+                    <div class="side-panel">
+                        <div class="side-card" style="width: 100%;">
+                            <h3 style="margin-bottom: 15px; color: #003366;">Active Tickets</h3>
+                            <div id="ticketsListContainer" style="max-height: 500px; overflow-y: auto; display:flex; flex-direction:column; gap:12px;">
+                                <!-- Dynamically generated tickets -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- KNOWLEDGE BASE -->
+            <section class="page" id="knowledgeBasePage">
+                <div class="page-heading">
+                    <h1>Knowledge Base</h1>
+                    <p>Access and download all knowledge base documents uploaded by the faculty.</p>
+                </div>
+
+                <div class="stats">
+                    <div class="stat-card">
+                        <div class="stat-icon blue"><i class="fa-solid fa-folder-open"></i></div>
+                        <div>
+                            <h3 id="kbTotalDocs">0</h3>
+                            <p>Total Documents</p>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon green"><i class="fa-solid fa-paint-brush"></i></div>
+                        <div>
+                            <h3 id="kbDesignDocs">0</h3>
+                            <p>Design Docs</p>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon orange"><i class="fa-solid fa-cogs"></i></div>
+                        <div>
+                            <h3 id="kbTechDocs">0</h3>
+                            <p>Technical Docs</p>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon red"><i class="fa-solid fa-chart-simple"></i></div>
+                        <div>
+                            <h3 id="kbReports">0</h3>
+                            <p>Reports</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="filter-row">
+                    <input type="search" id="kbSearch" placeholder="Search documents by title, team, category...">
+
+                    <select id="kbCategoryFilter">
+                        <option value="all">All Categories</option>
+                        <option value="Design">Design</option>
+                        <option value="Technical">Technical</option>
+                        <option value="Reports">Reports</option>
+                        <option value="Presentations">Presentations</option>
+                    </select>
+
+                    <button class="btn-secondary" id="kbClearFilterBtn">Clear Filters</button>
+                </div>
+
+                <div class="panel">
+                    <div class="table-wrapper">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Document Title</th>
+                                    <th>Category</th>
+                                    <th>Team</th>
+                                    <th>Uploaded By</th>
+                                    <th>Uploaded On</th>
+                                    <th>File Size</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="kbDocumentsTable">
+                                <!-- Dynamically generated -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- PROFILE -->
+            <section class="page" id="profilePage">
+                <div class="page-heading">
+                    <h1>Profile Settings</h1>
+                    <p>Manage your account profile details and login password.</p>
+                </div>
+
+                <div class="profile-layout">
+                    <div class="panel">
+                        <h3 class="profile-section-title" style="font-size:18px; margin-bottom:24px;">Edit Details</h3>
+                        <form id="profileForm" novalidate>
+
+                            <div class="profile-form-group">
+                                <label for="profileName">Full Name</label>
+                                <input type="text" id="profileName" class="form-control" placeholder="e.g. Dr. Faculty Name">
+                                <div class="profile-error" id="profileNameError">Name cannot be empty</div>
+                            </div>
+
+                            <div class="profile-form-group">
+                                <label for="profileEmail">Email Address</label>
+                                <input type="email" id="profileEmail" class="form-control" placeholder="e.g. faculty@ilp.edu">
+                                <div class="profile-error" id="profileEmailError">Enter a valid email address</div>
+                            </div>
+
+                            <div class="profile-form-group">
+                                <label for="profileCurrentPassword">Current Password <span style="color:#6b7280; font-weight:500;">(required to save changes)</span></label>
+                                <input type="password" id="profileCurrentPassword" class="form-control" placeholder="Enter your current password">
+                                <div class="profile-error" id="profileCurrentPasswordError">Incorrect current password</div>
+                            </div>
+
+                            <hr class="profile-section-divider">
+                            <p class="profile-section-title">Change Password <span style="color:#6b7280; font-size:12px; font-weight:500;">(Optional)</span></p>
+
+                            <div class="profile-form-group">
+                                <label for="profileNewPassword">New Password</label>
+                                <input type="password" id="profileNewPassword" class="form-control" placeholder="Leave blank if not changing">
+                                <div class="profile-error" id="profileNewPasswordError">Password must be at least 6 characters</div>
+                            </div>
+
+                            <div class="profile-form-group">
+                                <label for="profileConfirmNewPassword">Re-enter New Password</label>
+                                <input type="password" id="profileConfirmNewPassword" class="form-control" placeholder="Confirm new password">
+                                <div class="profile-error" id="profileConfirmNewPasswordError">Passwords do not match</div>
+                            </div>
+
+                            <button type="submit" class="btn-primary">Update Profile</button>
+                        </form>
+                    </div>
+
+                    <div style="display: flex; flex-direction: column; gap: 20px;">
+                        <div class="panel" style="padding: 20px;">
+                            <h3 style="color:#003366; margin-bottom: 10px; font-size:15px;"><i class="fa-solid fa-lock"></i> Security Info</h3>
+                            <p class="muted" style="font-size:13px; line-height:1.6;">Updating your password will require you to log in again. Ensure your email is correct for future password recovery.</p>
+                        </div>
+                        <div class="panel" style="padding: 20px;">
+                            <h3 style="color:#003366; margin-bottom: 10px; font-size:15px;"><i class="fa-solid fa-user"></i> Account Role</h3>
+                            <p class="muted" style="font-size:13px; line-height:1.6;">Technical Faculty — you can review and manage team submissions, component requests, tickets, and knowledge base documents.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </section>
+    </main>
+
+    <!-- REVIEW MODAL -->
+    <div class="modal-overlay" id="reviewModal">
+        <div class="modal">
+            <div class="modal-header">
+                <div>
+                    <h2 id="modalTitle">Review Submission</h2>
+                    <p id="modalSubTitle">Team document details</p>
+                </div>
+
+                <button class="close-btn" id="closeModalBtn">×</button>
+            </div>
+
+            <div class="modal-body" id="modalBody"></div>
+        </div>
+    </div>
+
+    <div class="toast" id="toast"></div>
+
+    <script src="facultyscript.js"></script>
+</body>
+</html>
+            

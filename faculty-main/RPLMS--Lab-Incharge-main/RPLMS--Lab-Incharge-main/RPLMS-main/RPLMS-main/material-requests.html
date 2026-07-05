@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Material Requests - RPLMS</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+
+<body>
+
+    <div class="app-container">
+
+        <!-- SIDEBAR -->
+        <aside class="sidebar"></aside>
+
+        <!-- MAIN PANEL -->
+        <main class="main-content">
+
+            <!-- HEADER -->
+            <header class="header">
+                <div class="header-left">
+                    <button class="sidebar-toggle" id="sidebarToggleBtn">&#9776;</button>
+                    <div class="page-title-area">
+                        <h1 class="page-title">Material Requests</h1>
+                        <ul class="breadcrumbs">
+                            <li>Home</li>
+                            <li>Material Requests</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="header-right">
+                    <button class="header-icon-btn">
+                        <span class="icon">&#128276;</span>
+                        <span class="icon-badge">3</span>
+                    </button>
+                    <div class="header-date-widget"></div>
+                </div>
+            </header>
+
+            <!-- CONTENT BODY -->
+            <div class="page-content-wrapper">
+
+                <!-- KPI METRICS GRID -->
+                <section class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon-wrapper stat-purple">&#9998;</div>
+                        <div class="stat-details">
+                            <span class="stat-value" id="kpiTotalRequests">--</span>
+                            <span class="stat-label">Total Requests</span>
+                            <span class="stat-subtext">All time team requests</span>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon-wrapper stat-orange">&#8635;</div>
+                        <div class="stat-details">
+                            <span class="stat-value" id="kpiPendingRequests">--</span>
+                            <span class="stat-label">Pending Approval</span>
+                            <span class="stat-subtext">Awaiting review</span>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon-wrapper stat-green">&#10003;</div>
+                        <div class="stat-details">
+                            <span class="stat-value" id="kpiApprovedRequests">--</span>
+                            <span class="stat-label">Approved Requests</span>
+                            <span class="stat-subtext">Successfully dispatched</span>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- FILTERS & SEARCH ROW -->
+                <section class="controls-bar">
+                    <div class="filters-left">
+                        <button class="filter-tab active" data-status="All">All Requests</button>
+                        <button class="filter-tab" data-status="Pending">Pending</button>
+                        <button class="filter-tab" data-status="Approved">Approved</button>
+                        <button class="filter-tab" data-status="Rejected">Rejected</button>
+                    </div>
+                    <div class="filters-right">
+                        <div class="search-wrapper">
+                            <span class="search-icon">&#128269;</span>
+                            <input type="text" id="searchRequestsInput" class="search-input"
+                                placeholder="Search requests...">
+                        </div>
+                        <button class="filter-btn">
+                            <span>&#9783;</span> Filters <span>&#9662;</span>
+                        </button>
+                    </div>
+                </section>
+
+                <!-- DATA TABLE -->
+                <section class="table-card">
+                    <div class="table-responsive">
+                        <table class="custom-table" id="requestsTable">
+                            <thead>
+                                <tr>
+                                    <th class="sortable" data-sort="id">Request ID &uarr;&darr;</th>
+                                    <th class="sortable" data-sort="teamName">Team Name &uarr;&darr;</th>
+                                    <th class="sortable" data-sort="item">Item Requested &uarr;&darr;</th>
+                                    <th class="sortable" data-sort="qty">Qty &uarr;&darr;</th>
+                                    <th class="sortable" data-sort="date">Date &uarr;&darr;</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="requestsTableBody">
+                                <!-- Records loaded dynamically -->
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Pagination Footer -->
+                    <div class="table-footer">
+                        <span class="table-info" id="requestsTableInfo">Showing 1 to 5 of 8 entries</span>
+                        <ul class="pagination" id="requestsPagination">
+                            <!-- Rendered programmatically -->
+                        </ul>
+                    </div>
+                </section>
+
+            </div>
+
+            <!-- FOOTER -->
+            <footer class="page-footer">
+                &copy; 2025 RPLMS - Rapid Prototyping Lab Management System. All rights reserved.
+            </footer>
+
+        </main>
+
+    </div>
+
+    <script src="js/common.js"></script>
+    <script src="js/material-request.js"></script>
+    <script>
+        renderBaseLayout("material-requests");
+    </script>
+</body>
+
+</html>

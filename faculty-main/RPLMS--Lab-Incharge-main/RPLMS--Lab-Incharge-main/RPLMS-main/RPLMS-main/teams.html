@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Team Workspace - RPLMS</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+<div class="app-container">
+
+    <aside class="sidebar"></aside>
+
+    <main class="main-content">
+
+        <header class="header">
+            <div class="header-left">
+                <button class="sidebar-toggle" id="sidebarToggleBtn">&#9776;</button>
+                <div class="page-title-area">
+                    <h1 class="page-title">Team Workspace</h1>
+                    <ul class="breadcrumbs"><li>Home</li><li>Team Workspace</li></ul>
+                </div>
+            </div>
+            <div class="header-right">
+                <button class="header-icon-btn"><span class="icon">&#128276;</span><span class="icon-badge">3</span></button>
+                <div class="header-date-widget"></div>
+            </div>
+        </header>
+
+        <div class="page-content-wrapper">
+
+            <!-- SEARCH BAR -->
+            <section class="content-card" style="padding:20px 24px;">
+                <div style="display:flex;align-items:flex-end;gap:12px;flex-wrap:wrap;">
+                    <div class="form-group" style="flex:1;min-width:200px;max-width:300px;margin:0;">
+                        <label class="form-label">Team ID <span class="required-star">*</span></label>
+                        <div class="search-wrapper" style="max-width:100%;">
+                            <span class="search-icon">&#128269;</span>
+                            <input type="text" id="teamSearchInput" class="search-input" placeholder="e.g. TEAM-001" maxlength="20" style="padding-left:36px;width:100%;">
+                        </div>
+                        <span class="invalid-feedback" id="searchError" style="display:none;">Please enter a valid Team ID (e.g. TEAM-001).</span>
+                    </div>
+                    <button class="btn btn-primary" id="searchBtn" style="padding:10px 20px;">Search</button>
+                    <button class="btn btn-secondary" id="resetBtn" style="padding:10px 20px;">Reset</button>
+                </div>
+            </section>
+
+            <!-- QUICK ACCESS TABLE -->
+            <section class="table-card" id="quickAccessTable">
+                <div style="padding:16px 20px;border-bottom:1px solid var(--border-color);display:flex;align-items:center;justify-content:space-between;">
+                    <div>
+                        <div style="font-size:14px;font-weight:700;color:var(--text-primary);">Active Teams</div>
+                        <div style="font-size:11px;color:var(--text-secondary);margin-top:2px;">Click View to load a team workspace</div>
+                    </div>
+                    <span class="badge status-resolved" id="activeTeamCount">--</span>
+                </div>
+                <div class="table-responsive">
+                    <table class="custom-table">
+                        <thead>
+                            <tr>
+                                <th>Team ID</th>
+                                <th>Team Name</th>
+                               
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="quickTeamsBody"></tbody>
+                    </table>
+                </div>
+                <div class="table-footer">
+                    <span class="table-info" id="quickTableInfo"></span>
+                    <ul class="pagination" id="quickPagination"></ul>
+                </div>
+            </section>
+
+            <!-- EMPTY STATE -->
+            <div id="emptyState">
+                <div class="empty-state">
+                    <span class="empty-state-icon">&#9750;</span>
+                    <span class="empty-state-title">Search for a Team Workspace</span>
+                    <p class="empty-state-desc">Enter a Team ID above or click View on any team above to load the full 360° workspace view.</p>
+                </div>
+            </div>
+
+            <!-- WORKSPACE (hidden until search) -->
+            <div id="workspaceContent" style="display:none;flex-direction:column;gap:24px;">
+
+                <!-- TEAM INFO CARD -->
+                <section class="content-card" style="padding:20px 24px;">
+                    <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;">
+                        <div>
+                            <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px;">
+                                <span style="font-size:18px;font-weight:800;color:var(--text-primary);" id="wsTeamName">--</span>
+                                <span class="badge" id="wsStatusBadge">--</span>
+                            </div>
+                            <div style="display:flex;gap:24px;flex-wrap:wrap;">
+                                <span style="font-size:12px;color:var(--text-secondary);">ID: <strong id="wsTeamId" style="color:var(--primary-color);">--</strong></span>
+                                <span style="font-size:12px;color:var(--text-secondary);">Project: <strong id="wsProject">--</strong></span>
+                            </div>
+                        </div>
+                        <div style="display:flex;gap:8px;flex-wrap:wrap;">
+                            <button class="btn btn-secondary" id="btnRaiseTicket" style="font-size:12px;padding:8px 16px;">Raise Ticket</button>
+                            <button class="btn btn-primary" id="btnPrint" style="font-size:12px;padding:8px 16px;">Print Summary</button>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- KPI CARDS -->
+                <section class="stats-grid" style="grid-template-columns:repeat(4,1fr);">
+                    <div class="stat-card">
+                        <div class="stat-details">
+                            <span class="stat-value" id="kpiBorrowed">0</span>
+                            <span class="stat-label">Borrowed Items</span>
+                            <span class="stat-subtext">Currently with team</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-details">
+                            <span class="stat-value" id="kpiPending">0</span>
+                            <span class="stat-label">Pending Requests</span>
+                            <span class="stat-subtext">Awaiting approval</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-details">
+                            <span class="stat-value" id="kpiDueSoon">0</span>
+                            <span class="stat-label">Due Soon</span>
+                            <span class="stat-subtext">Within 7 days</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-details">
+                            <span class="stat-value" id="kpiOverdue" style="color:#DC2626;">0</span>
+                            <span class="stat-label">Overdue Returns</span>
+                            <span class="stat-subtext">Past due date</span>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- MAIN GRID: LEFT tables + RIGHT timeline -->
+                <div style="display:grid;grid-template-columns:1fr 300px;gap:24px;align-items:start;">
+
+                    <div style="display:flex;flex-direction:column;gap:24px;">
+
+                        <!-- BORROWED EQUIPMENT TABLE -->
+                        <section class="table-card">
+                            <div style="padding:16px 20px;border-bottom:1px solid var(--border-color);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;">
+                                <div>
+                                    <div style="font-size:14px;font-weight:700;">Borrowed Equipment</div>
+                                    <div style="font-size:11px;color:var(--text-secondary);margin-top:2px;">Items currently issued to this team</div>
+                                </div>
+                                <div style="display:flex;gap:8px;align-items:center;">
+                                    <select id="eqStatusFilter" class="form-control" style="padding:6px 10px;font-size:12px;width:auto;">
+                                        <option value="All">All Status</option>
+                                        <option value="Assigned">With Team</option>
+                                        <option value="Overdue">Overdue</option>
+                                        <option value="Returned">Returned</option>
+                                    </select>
+                                    <div class="search-wrapper" style="max-width:160px;">
+                                        <span class="search-icon">&#128269;</span>
+                                        <input type="text" id="eqSearch" class="search-input" placeholder="Search...">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="custom-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Eq. ID</th>
+                                            <th>Equipment Name</th>
+                                            <th class="sortable" data-eq-sort="bookDate">Booking Date &#8597;</th>
+                                            <th class="sortable" data-eq-sort="returnDate">Return Date &#8597;</th>
+                                            <th>Slot</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="eqTableBody"></tbody>
+                                </table>
+                            </div>
+                            <div class="table-footer">
+                                <span class="table-info" id="eqInfo">--</span>
+                                <ul class="pagination" id="eqPagination"></ul>
+                            </div>
+                        </section>
+
+                        <!-- COMPONENT REQUESTS TABLE -->
+                        <section class="table-card">
+                            <div style="padding:16px 20px;border-bottom:1px solid var(--border-color);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;">
+                                <div>
+                                    <div style="font-size:14px;font-weight:700;">Component Requests</div>
+                                    <div style="font-size:11px;color:var(--text-secondary);margin-top:2px;">All component requests raised by this team</div>
+                                </div>
+                                <select id="reqStatusFilter" class="form-control" style="padding:6px 10px;font-size:12px;width:auto;">
+                                    <option value="All">All Status</option>
+                                    <option value="Pending">Pending</option>
+                                    <option value="Approved">Approved</option>
+                                    <option value="Rejected">Rejected</option>
+                                </select>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="custom-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Request ID</th>
+                                            <th>Item Name</th>
+                                            <th>Qty</th>
+                                            <th>Request Date</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="reqTableBody"></tbody>
+                                </table>
+                            </div>
+                            <div class="table-footer">
+                                <span class="table-info" id="reqInfo">--</span>
+                                <ul class="pagination" id="reqPagination"></ul>
+                            </div>
+                        </section>
+
+                    </div>
+
+                    <!-- ACTIVITY TIMELINE -->
+                    <section class="content-card" style="padding:0;overflow:hidden;">
+                        <div style="padding:16px 20px;border-bottom:1px solid var(--border-color);">
+                            <div style="font-size:14px;font-weight:700;">Recent Activity</div>
+                            <div style="font-size:11px;color:var(--text-secondary);margin-top:2px;">Latest actions — newest first</div>
+                        </div>
+                        <div id="timelineContainer" style="padding:20px 16px;display:flex;flex-direction:column;gap:0;max-height:640px;overflow-y:auto;"></div>
+                    </section>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <footer class="page-footer">&copy; 2025 RPLMS - Rapid Prototyping Lab Management System. All rights reserved.</footer>
+
+    </main>
+</div>
+
+<script src="js/common.js"></script>
+<script src="js/teams.js"></script>
+<script>renderBaseLayout("teams");</script>
+</body>
+</html>

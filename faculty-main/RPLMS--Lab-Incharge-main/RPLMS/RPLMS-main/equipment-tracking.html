@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Equipment Tracking - RPLMS</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <div class="app-container">
+
+        <!-- SIDEBAR -->
+        <aside class="sidebar"></aside>
+
+        <!-- MAIN PANEL -->
+        <main class="main-content">
+
+            <!-- HEADER -->
+            <header class="header">
+                <div class="header-left">
+                    <button class="sidebar-toggle" id="sidebarToggleBtn">&#9776;</button>
+                    <div class="page-title-area">
+                        <h1 class="page-title">Equipment Tracking</h1>
+                        <ul class="breadcrumbs">
+                            <li>Home</li>
+                            <li>Equipment Tracking</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="header-right">
+                    <button class="header-icon-btn">
+                        <span class="icon">&#128276;</span>
+                        <span class="icon-badge">3</span>
+                    </button>
+                    <div class="header-date-widget"></div>
+                </div>
+            </header>
+
+            <!-- CONTENT BODY -->
+            <div class="page-content-wrapper">
+
+                <!-- KPI METRICS GRID -->
+                <section class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon-wrapper stat-purple">&#10034;</div>
+                        <div class="stat-details">
+                            <span class="stat-value" id="kpiTotalTracked">--</span>
+                            <span class="stat-label">Tracked Items</span>
+                            <span class="stat-subtext">Total tracked equipment</span>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon-wrapper stat-orange">&#9888;</div>
+                        <div class="stat-details">
+                            <span class="stat-value" id="kpiReportedDamage">--</span>
+                            <span class="stat-label">Damaged/Pending</span>
+                            <span class="stat-subtext">Active damage tickets</span>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon-wrapper stat-green">&#10003;</div>
+                        <div class="stat-details">
+                            <span class="stat-value" id="kpiOperational">--</span>
+                            <span class="stat-label">Operational</span>
+                            <span class="stat-subtext font-weight-500">In service</span>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- FILTERS & SEARCH ROW -->
+                <section class="controls-bar">
+                    <div class="filters-left">
+                        <button class="filter-tab active" data-status="All">All Equipment</button>
+                        <button class="filter-tab" data-status="Available">Available</button>
+                        <button class="filter-tab" data-status="Repairing">Under Repair</button>
+                        <button class="filter-tab" data-status="Maintenance">Maintenance</button>
+                    </div>
+                    <div class="filters-right">
+                        <div class="search-wrapper">
+                            <span class="search-icon">&#128269;</span>
+                            <input type="text" id="searchTrackingInput" class="search-input"
+                                placeholder="Search equipment...">
+                        </div>
+                        <button class="filter-btn">
+                            <span>&#9783;</span> Filters <span>&#9662;</span>
+                        </button>
+                        <a href="inventory-edit.html?action=new" class="btn btn-primary"
+                            style="padding: 8px 16px; font-size: 13px;">
+                            &#65291; Add Equipment
+                        </a>
+                    </div>
+                </section>
+
+                <!-- DATA TABLE -->
+                <section class="table-card">
+                    <div class="table-responsive">
+                        <table class="custom-table" id="trackingTable">
+                            <thead>
+                                <tr>
+                                    <th class="sortable" data-sort="id">Item ID &uarr;&darr;</th>
+                                    <th class="sortable" data-sort="name">Equipment Name &uarr;&darr;</th>
+                                    <th class="sortable" data-sort="type">Type &uarr;&darr;</th>
+                                    <th class="sortable" data-sort="serial">Serial Number &uarr;&darr;</th>
+                                    <th class="sortable" data-sort="location">Location &uarr;&darr;</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="trackingTableBody">
+                                <!-- Records loaded dynamically -->
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Pagination Footer -->
+                    <div class="table-footer">
+                        <span class="table-info" id="trackingTableInfo">Showing 1 to 5 of 20 entries</span>
+                        <ul class="pagination" id="trackingPagination">
+                            <!-- Rendered programmatically -->
+                        </ul>
+                    </div>
+                </section>
+
+            </div>
+
+            <!-- FOOTER -->
+            <footer class="page-footer">
+                &copy; 2025 RPLMS - Rapid Prototyping Lab Management System. All rights reserved.
+            </footer>
+
+        </main>
+
+    </div>
+
+    <!-- MODAL: RAISE DAMAGE TICKET (Screenshot 3) -->
+    <div class="modal-backdrop" id="damageTicketModalBackdrop">
+        <div class="modal-container">
+            <div class="modal-header">
+                <div class="modal-header-left">
+                    <div class="circle-icon-wrapper red-alert">
+                        <!-- Wrench / Tool icon -->
+                        &#128295;
+                    </div>
+                    <div class="card-header-text">
+                        <span class="card-title">Raise Damage Ticket</span>
+                        <span class="card-subtitle">Report equipment damage and create a ticket for the respective
+                            team</span>
+                    </div>
+                </div>
+                <button class="modal-close-btn" id="closeDamageModalBtn">&times;</button>
+            </div>
+
+            <form id="damageTicketForm">
+                <div class="modal-body">
+
+                    <!-- Team ID -->
+                    <div class="form-group">
+                        <label class="form-label" for="teamId">Team ID <span class="required-star">*</span></label>
+                        <select id="teamId" name="teamId" class="form-control">
+                            <!-- Options filled programmatically from teams list -->
+                        </select>
+                        <span class="form-help-text">Select the team responsible for this equipment.</span>
+                    </div>
+
+                    <!-- Equipment Name -->
+                    <div class="form-group">
+                        <label class="form-label" for="equipmentName">Equipment Name <span
+                                class="required-star">*</span></label>
+                        <!-- Auto filled and readonly -->
+                        <input type="text" id="equipmentName" name="equipmentName" class="form-control" readonly>
+                        <span class="form-help-text">This field is auto-filled and cannot be changed.</span>
+                    </div>
+
+                    <!-- Damage Description -->
+                    <div class="form-group">
+                        <label class="form-label" for="damageDescription">Damage Description <span
+                                class="required-star">*</span></label>
+                        <textarea id="damageDescription" name="damageDescription" class="form-control" rows="4"
+                            placeholder="USB port is physically damaged durante project testing."></textarea>
+                        <span class="form-help-text">Provide details about the damage.</span>
+                    </div>
+
+                    <!-- Grid for Fine & Remarks -->
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                        <!-- Fine Amount -->
+                        <div class="form-group">
+                            <label class="form-label" for="fineAmount">Fine Amount (&#8377;) <span
+                                    class="required-star">*</span></label>
+                            <input type="number" id="fineAmount" name="fineAmount" class="form-control"
+                                placeholder="500" min="0">
+                            <span class="form-help-text">Enter the fine amount to be charged.</span>
+                        </div>
+
+                        <!-- Due Date (Added from Screenshot 2 details) -->
+                        <div class="form-group">
+                            <label class="form-label" for="dueDate">Due Date <span
+                                    class="required-star">*</span></label>
+                            <input type="date" id="dueDate" name="dueDate" class="form-control">
+                            <span class="form-help-text">Select the payment due date.</span>
+                        </div>
+                    </div>
+
+                    <!-- Remarks -->
+                    <div class="form-group">
+                        <label class="form-label" for="remarks">Remarks</label>
+                        <textarea id="remarks" name="remarks" class="form-control" rows="3"
+                            placeholder="Fine to be paid by the team before next material issue."></textarea>
+                        <span class="form-help-text">Any additional remarks (optional).</span>
+                    </div>
+
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" id="cancelDamageModalBtn">Cancel</button>
+                    <button type="submit" class="btn btn-primary">
+                        <!-- Paper plane icon -->
+                        &#10148; Raise Ticket
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="js/common.js"></script>
+    <script src="js/validation.js"></script>
+    <script src="js/equipment.js"></script>
+    <script>
+        renderBaseLayout("equipment-tracking");
+    </script>
+</body>
+
+</html>

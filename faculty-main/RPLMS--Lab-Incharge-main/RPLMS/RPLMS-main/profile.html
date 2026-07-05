@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile - RPLMS</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <div class="app-container">
+
+        <!-- SIDEBAR -->
+        <aside class="sidebar"></aside>
+
+        <!-- MAIN PANEL -->
+        <main class="main-content">
+
+            <!-- HEADER -->
+            <header class="header">
+                <div class="header-left">
+                    <button class="sidebar-toggle" id="sidebarToggleBtn">&#9776;</button>
+                    <div class="page-title-area">
+                        <h1 class="page-title">Profile</h1>
+                        <ul class="breadcrumbs">
+                            <li>Home</li>
+                            <li>Profile</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="header-right">
+                    <button class="header-icon-btn">
+                        <span class="icon">&#128276;</span>
+                        <span class="icon-badge">3</span>
+                    </button>
+                    <div class="header-date-widget"></div>
+                </div>
+            </header>
+
+            <!-- CONTENT BODY -->
+            <div class="page-content-wrapper">
+
+                <!-- PROFILE GRID Split -->
+                <div style="display: grid; grid-template-columns: 280px 1fr; gap: 24px; align-items: start;">
+
+                    <!-- Avatar Panel Card -->
+                    <div class="content-card" style="text-align: center;">
+                        <img id="profileCardAvatar" src="" alt="Avatar"
+                            style="width: 120px; height: 120px; border-radius: 50%; object-fit: cover; border: 4px solid var(--border-color); display: inline-block; margin-bottom: 16px;">
+                        <h2 class="card-title" id="profileCardName" style="font-size: 18px;">--</h2>
+                        <p style="font-size: 12px; color: var(--text-secondary); margin-top: 4px;" id="profileCardRole">
+                            --</p>
+
+                        <div
+                            style="display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; border-radius: 20px; background-color: #ECFDF5; color: #34D399; font-size: 11px; font-weight: 600; margin-top: 12px;">
+                            <span class="user-status-dot"></span> Active Session
+                        </div>
+
+                        <div
+                            style="margin-top: 24px; border-top: 1px solid var(--border-color); padding-top: 16px; text-align: left; font-size: 12px; display: flex; flex-direction: column; gap: 10px;">
+                            <div style="display:flex; justify-content:space-between;"><span
+                                    style="color:var(--text-secondary);">Location:</span><strong
+                                    id="profileCardLoc">--</strong></div>
+                            <div style="display:flex; justify-content:space-between;"><span
+                                    style="color:var(--text-secondary);">Timezone:</span><strong
+                                    id="profileCardTZ">--</strong></div>
+                        </div>
+                    </div>
+
+                    <!-- Edit Profile Form Card -->
+                    <div class="content-card">
+                        <div class="card-header-icon" style="margin-bottom: 20px;">
+                            <div class="circle-icon-wrapper blue-info">&#9786;</div>
+                            <div class="card-header-text">
+                                <span class="card-title">Profile Settings</span>
+                                <span class="card-subtitle">Manage your personal information and account options</span>
+                            </div>
+                        </div>
+
+                        <form id="profileForm">
+                            <div class="form-grid">
+
+                                <!-- Email Address -->
+                                <div class="form-group">
+                                    <label class="form-label" for="email">Email Address <span
+                                            class="required-star">*</span></label>
+                                    <input type="email" id="email" name="email" class="form-control">
+                                </div>
+
+                                <!-- Full Name -->
+                                <div class="form-group">
+                                    <label class="form-label" for="name">Full Name <span
+                                            class="required-star">*</span></label>
+                                    <input type="text" id="name" name="name" class="form-control">
+                                </div>
+
+                                <!-- Contact Number -->
+                                <div class="form-group">
+                                    <label class="form-label" for="phone">Phone Number <span
+                                            class="required-star">*</span></label>
+                                    <input type="text" id="phone" name="phone" class="form-control">
+                                </div>
+
+
+
+                            </div>
+
+                            <!-- Buttons -->
+                            <div class="form-actions" style="margin-top:24px;">
+                                <button type="button" class="btn btn-secondary" id="cancelProfileBtn">Cancel</button>
+                                <button type="submit" class="btn btn-primary">Update Profile</button>
+                            </div>
+
+                        </form>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- FOOTER -->
+            <footer class="page-footer">
+                &copy; 2025 RPLMS - Rapid Prototyping Lab Management System. All rights reserved.
+            </footer>
+
+        </main>
+
+    </div>
+
+    <script src="js/common.js"></script>
+    <script src="js/validation.js"></script>
+    <script>
+        renderBaseLayout("profile");
+
+        document.addEventListener("DOMContentLoaded", () => {
+            let db = getDB();
+            const user = db.currentUser;
+
+            // Populate avatar panel card
+            document.getElementById("profileCardAvatar").src = user.avatar;
+            document.getElementById("profileCardName").textContent = user.name;
+            document.getElementById("profileCardRole").textContent = user.role;
+            document.getElementById("profileCardLoc").textContent = user.location;
+            document.getElementById("profileCardTZ").textContent = user.timezone;
+
+            // Fill Form Inputs
+            document.getElementById("email").value = user.email;
+            document.getElementById("name").value = user.name;
+            document.getElementById("phone").value = user.phone;
+
+            // Validation schema
+            const schema = {
+                email: { required: true, type: "email" },
+                name: { required: true, charLimit: 60 },
+                phone: { required: true, type: "indianPhone" }
+            };
+
+            // Profile Form submit
+            const validator = new RPLMSFormValidator("profileForm", schema, (formData) => {
+
+                // Save back to DB
+                db.currentUser.email = formData.email;
+                db.currentUser.name = formData.name;
+                db.currentUser.phone = formData.phone;
+                setDB(db);
+
+                // Show Toast
+                showToast("Profile settings updated successfully!", "success");
+
+                // Sync sidebar and refresh layout details
+                renderBaseLayout("profile");
+
+                // Update card headings
+                document.getElementById("profileCardName").textContent = formData.name;
+            });
+
+            document.getElementById("cancelProfileBtn").addEventListener("click", () => {
+                if (validator.isDirty) {
+                    createConfirmationModal(
+                        "Discard Profile Updates",
+                        "Are you sure you want to discard your profile entries?",
+                        () => {
+                            window.location.href = "index.html";
+                        },
+                        "Discard Changes",
+                        true
+                    );
+                } else {
+                    window.location.href = "index.html";
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

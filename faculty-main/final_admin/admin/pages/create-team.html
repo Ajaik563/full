@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Teams | RPLMS Administrator</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/create-team.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar and Navbar consistent across pages -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo-container">
+                    <h1>ILP</h1>
+                    <p>Rapid Prototyping Lab</p>
+                </div>
+            </div>
+            <div class="sidebar-label">Admin Portal</div>
+            <nav class="sidebar-menu">
+                <a href="dashboard.html" class="menu-item"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg><span>Dashboard</span></a>
+                <a href="add-profile.html" class="menu-item"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><line x1="20" y1="8" x2="20" y2="14"></line><line x1="17" y1="11" x2="23" y2="11"></line></svg><span>Add Profiles</span></a>
+                <a href="create-team.html" class="menu-item active"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg><span>Create Teams</span></a>
+                <a href="staff-availability.html" class="menu-item"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg><span>Staff Availability List</span></a>
+                <a href="student-list.html" class="menu-item"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><polyline points="23 21 23 11 15 11 15 21"></polyline></svg><span>Student List</span></a>
+                <a href="project-details.html" class="menu-item"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg><span>Project Details</span></a>
+                <a href="settings.html" class="menu-item"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg><span>Settings</span></a>
+            </nav>
+            <div class="sidebar-footer">
+                <a href="../../../login1.html" class="menu-item"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg><span>Sign Out</span></a>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <header class="navbar">
+                <div class="navbar-left">
+                    <button class="menu-toggle"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></button>
+                    <div class="breadcrumb"><span>Pages</span><span>/</span><span class="active">Create Teams</span></div>
+                </div>
+                <div class="navbar-right">
+                    <a href="notification.html" class="nav-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg><span class="badge">3</span></a>
+                    <div class="user-profile">
+                        <div class="user-info"><p class="user-name">Admin Name</p><p class="user-role">Administrator</p></div>
+                        <div class="user-avatar"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg></div>
+                    </div>
+                </div>
+            </header>
+
+            <div class="content-body">
+                <div class="page-header">
+                    <h2 class="page-title">Create Teams</h2>
+                    <p class="page-subtitle">Create a new project team by adding team leader, members and technical faculty.</p>
+                </div>
+
+                <div class="grid grid-cols-form mt-24">
+                    <!-- Steps Form -->
+                    <div class="steps-scroll-container">
+                        <div class="step-card">
+                            <div class="step-header">
+                                <div class="step-number">1</div>
+                                <div class="step-title">
+                                    <h4>Team Leader</h4>
+                                    <p>Select a student to be the team leader.</p>
+                                </div>
+                            </div>
+                            <div class="step-content">
+                                <label class="field-label">Select Team Leader <span>*</span></label>
+                                <div class="search-container">
+                                    <input type="text" id="leaderSearch" placeholder="Search by name or roll number..." class="search-input">
+                                    <div id="leaderResults" class="dropdown-results"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="step-card">
+                            <div class="step-header">
+                                <div class="step-number">2</div>
+                                <div class="step-title">
+                                    <h4>Team Members</h4>
+                                    <p>Add team members (up to 15 students).</p>
+                                </div>
+                                <div class="step-badge" id="memberCountBadge">0 / 15 members added</div>
+                            </div>
+                            <div class="step-content">
+                                <label class="field-label">Select Members <span>*</span></label>
+                                <div id="memberInputsContainer">
+                                    <div class="member-input-row" id="row-1">
+                                        <span class="member-label">Member 1 <span>*</span></span>
+                                        <div class="search-container">
+                                            <input type="text" class="search-input member-search" placeholder="Search by name or roll number..." data-index="1">
+                                            <div class="dropdown-results"></div>
+                                        </div>
+                                    </div>
+                                    <div class="member-input-row" id="row-2">
+                                        <span class="member-label">Member 2 <span>*</span></span>
+                                        <div class="search-container">
+                                            <input type="text" class="search-input member-search" placeholder="Search by name or roll number..." data-index="2">
+                                            <div class="dropdown-results"></div>
+                                        </div>
+                                    </div>
+                                    <div class="member-input-row" id="row-3">
+                                        <span class="member-label">Member 3 <span>*</span></span>
+                                        <div class="search-container">
+                                            <input type="text" class="search-input member-search" placeholder="Search by name or roll number..." data-index="3">
+                                            <div class="dropdown-results"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button type="button" class="btn btn-outline-full mt-16" id="addMemberBtn">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                                    Add Members
+                                </button>
+                                <p class="helper-text mt-8">You can add up to 15 members</p>
+                            </div>
+                        </div>
+
+                        <div class="step-card">
+                            <div class="step-header">
+                                <div class="step-number">3</div>
+                                <div class="step-title">
+                                    <h4>Technical Staff</h4>
+                                    <p>Assign a technical staff to guide the team.</p>
+                                </div>
+                            </div>
+                            <div class="step-content">
+                                <label class="field-label">Select Technical Staff <span>*</span></label>
+                                <div class="search-container">
+                                    <input type="text" id="staffSearch" placeholder="Search by name or staff ID..." class="search-input">
+                                    <div id="staffResults" class="dropdown-results"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="step-card">
+                            <div class="step-header">
+                                <div class="step-number">4</div>
+                                <div class="step-title">
+                                    <h4>Project Deadline</h4>
+                                    <p>Set the deadline for the project.</p>
+                                </div>
+                            </div>
+                            <div class="step-content">
+                                <label class="field-label">Deadline <span>*</span></label>
+                                <input type="date" id="deadlineDate" class="date-input">
+                            </div>
+                        </div>
+
+                        <div class="form-footer mt-24">
+                            <button type="button" id="resetBtn" class="btn btn-outline">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 4v6h-6"></path><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path></svg>
+                                Reset
+                            </button>
+                            <button type="button" id="createTeamBtn" class="btn btn-primary">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><polyline points="16 11 18 13 22 9"></polyline></svg>
+                                Create Team
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Summary Card -->
+                    <div class="summary-sticky">
+                        <div class="card summary-card">
+                            <h4 class="summary-title">Team Summary</h4>
+                            <p class="summary-subtitle">Review team details before creating.</p>
+                            
+                            <div class="summary-list">
+                                <div class="summary-item">
+                                    <div class="summary-icon">
+                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                                    </div>
+                                    <div class="summary-info">
+                                        <span class="label">Team Leader</span>
+                                        <span class="value" id="summaryLeader">Not selected</span>
+                                    </div>
+                                </div>
+                                <div class="summary-item">
+                                    <div class="summary-icon">
+                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                                    </div>
+                                    <div class="summary-info">
+                                        <span class="label">Team Members</span>
+                                        <span class="value" id="summaryMembers">No members added</span>
+                                    </div>
+                                </div>
+                                <div class="summary-item">
+                                    <div class="summary-icon">
+                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><line x1="20" y1="8" x2="20" y2="14"></line><line x1="17" y1="11" x2="23" y2="11"></line></svg>
+                                    </div>
+                                    <div class="summary-info">
+                                        <span class="label">Technical Staff</span>
+                                        <span class="value" id="summaryStaff">Not selected</span>
+                                    </div>
+                                </div>
+                                <div class="summary-item">
+                                    <div class="summary-icon">
+                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                                    </div>
+                                    <div class="summary-info">
+                                        <span class="label">Deadline</span>
+                                        <span class="value" id="summaryDeadline">Not selected</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="note-box mt-24">
+                                <div class="note-icon">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                                </div>
+                                <p><strong>Note:</strong> After creating the team, a unique Team ID will be generated automatically.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <footer class="mt-40 text-center text-muted fs-12">&copy; 2026 ILP Rapid Prototyping Lab Management System. All rights reserved.</footer>
+            </div>
+        </main>
+    </div>
+
+    <!-- Success Modal -->
+    <div id="successModal" class="modal">
+        <div class="modal-content">
+            <div class="success-icon">
+                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            </div>
+            <h3>Team Created Successfully!</h3>
+            <p>Team ID: <strong id="generatedTeamID">TEAM-2025-001</strong></p>
+            <button class="btn btn-primary" onclick="closeModal()">Close</button>
+        </div>
+    </div>
+
+    <script src="../js/app.js"></script>
+    <script src="../js/validation.js"></script>
+    <script src="../js/create-team.js"></script>
+</body>
+</html>

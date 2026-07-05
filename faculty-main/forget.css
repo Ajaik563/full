@@ -1,0 +1,356 @@
+/* ===============================
+   GOOGLE FONT
+==================================*/
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Inter',sans-serif;
+}
+
+body{
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:linear-gradient(135deg,#2c2364,#4b3fd1);
+    overflow:hidden;
+}
+
+/* Background circles */
+
+body::before{
+    content:"";
+    position:absolute;
+    width:420px;
+    height:420px;
+    border-radius:50%;
+    background:rgba(255,255,255,.05);
+    top:-120px;
+    left:-120px;
+}
+
+body::after{
+    content:"";
+    position:absolute;
+    width:320px;
+    height:320px;
+    border-radius:50%;
+    background:rgba(255,255,255,.05);
+    bottom:-120px;
+    right:-100px;
+}
+
+.container{
+    width:100%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:30px;
+    z-index:2;
+}
+
+.card{
+
+    width:480px;
+    background:#fff;
+    border-radius:25px;
+    padding:45px;
+    box-shadow:
+    0 20px 45px rgba(0,0,0,.18);
+
+    animation:fade .5s ease;
+}
+
+@keyframes fade{
+
+from{
+
+opacity:0;
+transform:translateY(30px);
+
+}
+
+to{
+
+opacity:1;
+transform:translateY(0);
+
+}
+
+}
+
+.card h2{
+
+font-size:34px;
+font-weight:700;
+color:#171717;
+margin-bottom:8px;
+
+}
+
+.subtitle{
+
+color:#667085;
+font-size:16px;
+margin-bottom:35px;
+
+}
+
+.section{
+
+margin-bottom:20px;
+
+}
+
+.form-group{
+
+margin-bottom:20px;
+
+}
+
+label{
+
+display:block;
+font-weight:600;
+margin-bottom:8px;
+color:#1f2937;
+
+}
+
+input{
+
+width:100%;
+height:52px;
+border:1px solid #d7ddea;
+border-radius:12px;
+padding:0 18px;
+font-size:15px;
+transition:.3s;
+outline:none;
+background:#f9fbff;
+
+}
+
+input:focus{
+
+border-color:#5b4ff5;
+box-shadow:0 0 0 4px rgba(91,79,245,.12);
+
+}
+
+input::placeholder{
+
+color:#9aa4b2;
+
+}
+
+/* Password */
+
+.password-box{
+
+position:relative;
+
+}
+
+.password-box input{
+
+padding-right:50px;
+
+}
+
+.toggle{
+
+position:absolute;
+right:18px;
+top:50%;
+transform:translateY(-50%);
+cursor:pointer;
+font-size:18px;
+color:#6b7280;
+
+}
+
+.toggle:hover{
+
+color:#5b4ff5;
+
+}
+
+/* Button */
+
+button{
+
+width:100%;
+height:54px;
+border:none;
+border-radius:14px;
+cursor:pointer;
+font-size:16px;
+font-weight:600;
+color:#fff;
+
+background:linear-gradient(90deg,#6c63ff,#5145e5);
+
+transition:.3s;
+
+box-shadow:
+0 10px 20px rgba(90,79,245,.25);
+
+}
+
+button:hover{
+
+transform:translateY(-2px);
+
+box-shadow:
+0 14px 30px rgba(90,79,245,.35);
+
+}
+
+/* OTP Card */
+
+.otp-display{
+
+margin-top:20px;
+background:#f4f5ff;
+border:1px dashed #6c63ff;
+padding:20px;
+border-radius:15px;
+text-align:center;
+display:none;
+
+}
+
+.otp-display span{
+
+color:#555;
+
+}
+
+.otp-display h3{
+
+margin-top:10px;
+font-size:34px;
+color:#5b4ff5;
+letter-spacing:8px;
+
+}
+
+/* Errors */
+
+.error{
+
+display:block;
+margin-top:6px;
+color:#e53935;
+font-size:13px;
+font-weight:500;
+min-height:18px;
+
+}
+
+/* Success */
+
+.success{
+
+text-align:center;
+padding-top:10px;
+
+}
+
+.success-icon{
+
+font-size:70px;
+color:#32c671;
+margin-bottom:20px;
+
+}
+
+.success h2{
+
+margin-bottom:10px;
+color:#1d2939;
+
+}
+
+.success p{
+
+color:#667085;
+margin-bottom:30px;
+
+}
+
+.loginBtn{
+
+background:linear-gradient(90deg,#6c63ff,#5145e5);
+
+}
+
+/* Smooth section animation */
+
+#otpSection,
+#passwordSection,
+#successSection{
+
+animation:slide .4s ease;
+
+}
+
+@keyframes slide{
+
+from{
+
+opacity:0;
+transform:translateY(20px);
+
+}
+
+to{
+
+opacity:1;
+transform:translateY(0);
+
+}
+
+}
+
+/* Mobile */
+
+@media(max-width:600px){
+
+.container{
+
+padding:18px;
+
+}
+
+.card{
+
+width:100%;
+padding:30px 25px;
+border-radius:20px;
+
+}
+
+.card h2{
+
+font-size:28px;
+
+}
+
+.subtitle{
+
+font-size:15px;
+
+}
+
+button{
+
+height:50px;
+
+}
+
+}

@@ -1,0 +1,260 @@
+/* Project Details Specific Styles */
+
+.grid-cols-projects {
+    grid-template-columns: 1fr 2fr;
+    gap: 24px;
+}
+
+/* Search Card */
+.search-card { padding: 24px; }
+
+.field-label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 12px;
+}
+
+.project-search-container {
+    display: flex;
+    gap: 12px;
+}
+
+.search-input {
+    flex: 1;
+    padding: 12px 16px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 14px;
+}
+
+.search-btn {
+    width: 46px;
+    height: 46px;
+    background-color: var(--primary-color);
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition);
+}
+
+.search-btn:hover { background-color: var(--primary-dark); }
+
+/* Quick Stats */
+.card-title-sm { font-size: 16px; font-weight: 700; margin-bottom: 16px; }
+
+.stats-mini-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+}
+
+.stat-mini {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.stat-mini-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.stat-mini-icon.blue { background-color: #eff6ff; color: #3b82f6; }
+.stat-mini-icon.green { background-color: #f0fdf4; color: #22c55e; }
+.stat-mini-icon.orange { background-color: #fff7ed; color: #f59e0b; }
+.stat-mini-icon.red { background-color: #fef2f2; color: #ef4444; }
+
+.stat-mini-info p { font-size: 11px; color: var(--text-muted); font-weight: 500; }
+.stat-mini-info h3 { font-size: 16px; font-weight: 700; }
+
+/* Main Project Card */
+.project-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.header-main {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.header-main h3 { font-size: 20px; font-weight: 700; }
+
+.status-badge {
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.status-in-progress { background-color: #f0fdf4; color: #22c55e; }
+
+.project-details-grid {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    gap: 40px;
+}
+
+.details-info {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.info-row {
+    display: grid;
+    grid-template-columns: 150px 1fr;
+    font-size: 14px;
+}
+
+.info-label { color: var(--text-muted); font-weight: 500; }
+.info-value { font-weight: 600; color: var(--text-main); }
+.highlight-orange { color: #f59e0b; }
+
+.align-top { align-items: flex-start; }
+
+.description-box {
+    background-color: var(--bg-color);
+    padding: 16px;
+    border-radius: 12px;
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--text-main);
+    border: 1px solid #f1f5f9;
+}
+
+/* Progress Circle */
+.progress-section h5, 
+.timeline-section h5 {
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+.progress-circle-container {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    margin-bottom: 40px;
+}
+
+.progress-circle {
+    width: 100px;
+    height: 100px;
+    position: relative;
+    --percent: 40;
+}
+
+.progress-circle svg {
+    transform: rotate(-90deg);
+}
+
+.progress-circle .bg { fill: none; stroke: #f1f5f9; stroke-width: 8; }
+.progress-circle .fg {
+    fill: none;
+    stroke: #6366f1;
+    stroke-width: 8;
+    stroke-linecap: round;
+    stroke-dasharray: 282.7; /* 2 * PI * 45 */
+    stroke-dashoffset: calc(282.7 - (282.7 * var(--percent)) / 100);
+    transition: stroke-dashoffset 1s ease-in-out;
+}
+
+.progress-circle .percentage {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.progress-text .p-title { font-size: 12px; color: var(--text-muted); }
+.progress-text .p-val { font-size: 24px; font-weight: 700; line-height: 1.1; }
+.progress-text .p-desc { font-size: 12px; color: var(--text-muted); }
+
+/* Timeline */
+.timeline {
+    position: relative;
+    padding-left: 30px;
+}
+
+.timeline::before {
+    content: '';
+    position: absolute;
+    left: 10px;
+    top: 5px;
+    bottom: 5px;
+    width: 2px;
+    background-color: #f1f5f9;
+}
+
+.timeline-item {
+    position: relative;
+    padding-bottom: 24px;
+}
+
+.timeline-icon {
+    position: absolute;
+    left: -26px;
+    top: 2px;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background-color: #fff;
+    border: 2px solid #cbd5e1;
+    z-index: 2;
+}
+
+.timeline-item.completed .timeline-icon {
+    background-color: #22c55e;
+    border-color: #22c55e;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.timeline-item.current .timeline-icon {
+    background-color: #6366f1;
+    border-color: #6366f1;
+    box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.15);
+}
+
+.timeline-item.pending .timeline-icon {
+    background-color: #fff;
+    border-color: #cbd5e1;
+}
+
+.timeline-content { padding-left: 10px; }
+.t-title { font-size: 13px; font-weight: 700; }
+.t-date { font-size: 12px; color: var(--text-muted); }
+
+/* Table Specifics */
+.table-responsive { width: 100%; overflow-x: auto; }
+.data-table { width: 100%; border-collapse: collapse; }
+.data-table th { text-align: left; padding: 16px; background-color: #f8fafc; color: var(--text-muted); font-size: 11px; font-weight: 700; text-transform: uppercase; border-bottom: 1px solid var(--border-color); }
+.data-table td { padding: 16px; font-size: 13px; border-bottom: 1px solid var(--border-color); }
+
+@media (max-width: 1200px) {
+    .grid-cols-projects { grid-template-columns: 1fr; }
+    .stats-mini-grid { grid-template-columns: repeat(2, 1fr); }
+    .project-details-grid { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 640px) {
+    .info-row { grid-template-columns: 1fr; gap: 4px; }
+    .progress-circle-container { flex-direction: column; align-items: flex-start; }
+}

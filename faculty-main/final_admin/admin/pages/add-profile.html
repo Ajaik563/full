@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Profiles | RPLMS Administrator</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/add-profile.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo-container">
+                    <h1>ILP</h1>
+                    <p>Rapid Prototyping Lab</p>
+                </div>
+            </div>
+            
+            <div class="sidebar-label">Admin Portal</div>
+            
+            <nav class="sidebar-menu">
+                <a href="dashboard.html" class="menu-item">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                    <span>Dashboard</span>
+                </a>
+                <a href="add-profile.html" class="menu-item active">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><line x1="20" y1="8" x2="20" y2="14"></line><line x1="17" y1="11" x2="23" y2="11"></line></svg>
+                    <span>Add Profiles</span>
+                </a>
+                <a href="create-team.html" class="menu-item">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                    <span>Create Teams</span>
+                </a>
+                <a href="staff-availability.html" class="menu-item">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                    <span>Staff Availability List</span>
+                </a>
+                <a href="student-list.html" class="menu-item">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><polyline points="23 21 23 11 15 11 15 21"></polyline></svg>
+                    <span>Student List</span>
+                </a>
+                <a href="project-details.html" class="menu-item">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
+                    <span>Project Details</span>
+                </a>
+                <a href="settings.html" class="menu-item">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                    <span>Settings</span>
+                </a>
+            </nav>
+            
+            <div class="sidebar-footer">
+                <a href="../../../login1.html" class="menu-item">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+                    <span>Sign Out</span>
+                </a>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="navbar">
+                <div class="navbar-left">
+                    <button class="menu-toggle">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+                    </button>
+                    <div class="breadcrumb">
+                        <span>Pages</span>
+                        <span>/</span>
+                        <span class="active">Add Profiles</span>
+                    </div>
+                </div>
+                
+                <div class="navbar-right">
+                    <a href="notification.html" class="nav-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+                        <span class="badge">3</span>
+                    </a>
+                    <div class="user-profile">
+                        <div class="user-info">
+                            <p class="user-name">Admin Name</p>
+                            <p class="user-role">Administrator</p>
+                        </div>
+                        <div class="user-avatar">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <div class="content-body">
+                <div class="page-flex-header">
+                    <div class="page-header">
+                        <h2 class="page-title">Add Profiles</h2>
+                        <p class="page-subtitle">Add new students or technical staff to the database.</p>
+                    </div>
+                    <div class="header-actions">
+                        <div class="bulk-upload-card">
+                            <div class="bulk-info">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+                                <div>
+                                    <span class="bulk-title"><a href="upload.html">Upload (Excel)</a></span>
+                                    <span class="bulk-desc"> multiple students via Excel</span>
+                                </div>
+                            </div>
+                            <button class="btn btn-outline btn-sm">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                                <a href="#">Download Template</a>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tabs -->
+                <div class="tabs-container">
+                    <button class="tab-btn active" data-tab="student">Add New Student</button>
+                    <button class="tab-btn" data-tab="staff">Add New Technical Staff</button>
+                </div>
+
+                <!-- Main Content Grid -->
+                <div class="grid grid-cols-form mt-24">
+                    <!-- Form Section -->
+                    <div class="card form-card">
+                        <h4 class="form-section-title">Student Information</h4>
+                        <form id="profileForm" novalidate>
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label>Full Name <span>*</span></label>
+                                    <input type="text" id="fullName" placeholder="Enter full name" minlength="3" maxlength="50" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Date of Birth <span>*</span></label>
+                                    <input type="date" id="dob" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Phone Number <span>*</span></label>
+                                    <input type="tel" id="phoneNumber" maxlength="10" placeholder="Enter phone number" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Department <span>*</span></label>
+                                    <select id="department" required>
+                                        <option value="">Select department</option>
+                                        <option value="AI & DS">AI & DS</option>
+                                        <option value="CSE">CSE</option>
+                                        <option value="IT">IT</option>
+                                        <option value="ECE">ECE</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Batch / Year <span>*</span></label>
+                                    <select id="batch" required>
+                                        <option value="">Select batch/year</option>
+                                        <option value="2021">2021</option>
+                                        <option value="2022">2022</option>
+                                        <option value="2023">2023</option>
+                                        <option value="2024">2024</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Roll Number / ID <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline; margin-left:4px; vertical-align:middle; cursor:help;"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg></label>
+                                    <input type="text" id="rollNumber" maxlength="20" placeholder="Enter roll number">
+                                </div>
+                                <div class="form-group full-width">
+                                    <label>Email ID</label>
+                                    <input type="email" id="email"  placeholder="Enter email address" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Password (Temporary) <span>*</span></label>
+                                    <div class="input-with-icon">
+                                        <input type="password" id="password" minlength="8" required>
+                                        <button type="button" class="icon-btn toggle-password">
+                                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Confirm Password <span>*</span></label>
+                                    <div class="input-with-icon">
+                                        <input type="password" id="confirmPassword" placeholder="Confirm password" required>
+                                        <button type="button" class="icon-btn toggle-password">
+                                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-footer">
+                                <button type="reset" class="btn btn-outline" id="resetBtn">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 4v6h-6"></path><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path></svg>
+                                    Reset
+                                </button>
+                                <button type="submit" class="btn btn-primary">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>
+                                    Save Student
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- Preview Section -->
+                    <div class="card preview-card">
+                        <h4 class="form-section-title">Preview</h4>
+                        <div class="preview-content">
+                            <div class="preview-avatar">
+                                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#6366f1" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                            </div>
+                            <div class="preview-details">
+                                <div class="preview-item">
+                                    <span class="label">Full Name</span>
+                                    <span class="value" id="prev-name">-</span>
+                                </div>
+                                <div class="preview-item">
+                                    <span class="label">Date of Birth</span>
+                                    <span class="value" id="prev-dob">-</span>
+                                </div>
+                                <div class="preview-item">
+                                    <span class="label">Phone Number</span>
+                                    <span class="value" id="prev-phone">-</span>
+                                </div>
+                                <div class="preview-item">
+                                    <span class="label">Department</span>
+                                    <span class="value" id="prev-dept">-</span>
+                                </div>
+                                <div class="preview-item">
+                                    <span class="label">Batch / Year</span>
+                                    <span class="value" id="prev-batch">-</span>
+                                </div>
+                                <div class="preview-item">
+                                    <span class="label">Roll Number / ID</span>
+                                    <span class="value" id="prev-roll">-</span>
+                                </div>
+                                <div class="preview-item">
+                                    <span class="label">Email ID</span>
+                                    <span class="value" id="prev-email">-</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recently Created Profiles Table -->
+                <div class="card mt-24">
+                    <div class="card-header">
+                        <h4 class="card-title">Recently Created Profiles</h4>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Sl. No</th>
+                                    <th>Name</th>
+                                    <th>Role</th>
+                                    <th>Department</th>
+                                    <th>Batch / Year</th>
+                                    <th>Created On</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="profilesTableBody">
+                                <!-- Table rows will be added here via JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="table-footer">
+                        <a href="student-list.html" class="view-all-link">View All Profiles &rarr;</a>
+                    </div>
+                </div>
+
+                <footer class="mt-40 text-center text-muted fs-12">
+                    &copy; 2026 ILP Rapid Prototyping Lab Management System. All rights reserved.
+                </footer>
+            </div>
+        </main>
+    </div>
+
+    <!-- Success Popup / Modal -->
+    <div id="successModal" class="modal">
+        <div class="modal-content">
+            <div class="success-icon">
+                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            </div>
+            <h3>Successfully Created!</h3>
+            <p>The profile has been added to the database.</p>
+            <button class="btn btn-primary" onclick="closeModal()">Great!</button>
+        </div>
+    </div>
+
+    <script src="../js/app.js"></script>
+    <script src="../js/validation.js"></script>
+    <script src="../js/add-profile.js"></script>
+</body>
+</html>

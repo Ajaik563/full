@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RPLMS - Login</title>
+  <link rel="stylesheet" href="login.css">
+  <!-- FontAwesome CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+  <div class="login-container">
+    <!-- Left Section -->
+    <div class="left-section">
+      <div class="logo-container">
+        <div class="logo">RPL</div>
+        <h1 class="system-name">RPL System</h1>
+      </div>
+      <h2 class="system-title">Rapid Prototyping Lab Management System</h2>
+      <p class="system-description">
+        Securely access projects, machine bookings, approvals, reports and laboratory resources.
+      </p>
+      <div class="footer-text">
+        <span class="secure-icon"><i class="fa-solid fa-lock"></i></span>
+        Secure Role-Based Access Portal
+      </div>
+    </div>
+
+    <!-- Right Section -->
+    <div class="right-section">
+      <div class="form-container">
+        <h2 class="form-title">Login</h2>
+        <p class="form-subtitle">Sign in to access your dashboard and laboratory resources.</p>
+
+        <!-- General Form Error Message -->
+        <div id="formMessage" class="message hidden"></div>
+
+        <form id="loginForm" novalidate>
+          <!-- Role Selection Dropdown -->
+          <div class="form-group">
+            <label for="role"><i class="fa-solid fa-users"></i> Select Role</label>
+            <select id="role" name="role" required>
+              <option value="">-- Select Your Role --</option>
+              <option value="Admin">Admin</option>
+              <option value="Senior Faculty">Senior Faculty</option>
+              <option value="Technical Faculty">Technical Faculty</option>
+              <option value="Lab Technician">Lab Technician</option>
+              <option value="Student">Student</option>
+            </select>
+            <div class="error-message" id="roleError"></div>
+          </div>
+
+          <!-- Email / User ID Field -->
+          <div class="form-group">
+            <label for="emailOrUserId"><i class="fa-solid fa-envelope"></i> Email / User ID</label>
+            <input type="text" id="emailOrUserId" name="emailOrUserId" placeholder="Enter Email or User ID" autocomplete="username" required>
+            <div class="error-message" id="emailError"></div>
+          </div>
+
+          <!-- Password Field -->
+          <div class="form-group">
+            <label for="password"><i class="fa-solid fa-lock"></i> Password</label>
+            <div class="password-container">
+              <input type="password" id="password" name="password" placeholder="Enter Password" autocomplete="current-password" required>
+              <button type="button" class="toggle-password" id="togglePassword" aria-label="Toggle password visibility">
+                <i id="toggleIcon" class="fa-solid fa-eye"></i>
+              </button>
+            </div>
+            <div class="error-message" id="passwordError"></div>
+          </div>
+
+          <!-- Remember Me & Forgot Password -->
+          <div class="form-options">
+            <label class="checkbox-container">
+              <input type="checkbox" id="rememberMe" name="rememberMe">
+              <span class="checkmark"></span>
+              Remember Me
+            </label>
+            <a href="forget.html" class="forgot-password"><i class="fa-solid fa-key"></i> Forgot Password?</a>
+          </div>
+
+          <!-- Login Button -->
+          <button type="submit" id="loginButton" class="login-button">
+            <span id="buttonText">LOGIN</span>
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script src="login.js"></script>
+</body>
+</html>

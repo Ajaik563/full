@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Team Workspace - RPLMS</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="app-container">
+
+    <aside class="sidebar"></aside>
+
+    <main class="main-content">
+
+        <header class="header">
+            <div class="header-left">
+                <button class="sidebar-toggle" id="sidebarToggleBtn">&#9776;</button>
+                <div class="page-title-area">
+                    <h1 class="page-title">Team Workspace</h1>
+                    <ul class="breadcrumbs"><li>Home</li><li>Team Workspace</li></ul>
+                </div>
+            </div>
+            <div class="header-right">
+                <button class="header-icon-btn"><span class="icon">&#128276;</span><span class="icon-badge">3</span></button>
+                <div class="header-date-widget"></div>
+            </div>
+        </header>
+
+        <div class="page-content-wrapper">
+
+            <!-- SEARCH BAR -->
+            <section class="content-card" style="padding:20px 24px;">
+                <div style="display:flex;align-items:flex-end;gap:12px;flex-wrap:wrap;">
+                    <div class="form-group" style="flex:1;min-width:200px;max-width:300px;margin:0;">
+                        <label class="form-label">Team ID <span class="required-star">*</span></label>
+                        <div class="search-wrapper" style="max-width:100%;">
+                            <span class="search-icon">&#128269;</span>
+                            <input type="text" id="teamSearchInput" class="search-input" placeholder="e.g. TEAM-001" maxlength="20" style="padding-left:36px;width:100%;">
+                        </div>
+                        <span class="invalid-feedback" id="searchError" style="display:none;">Please enter a valid Team ID (e.g. TEAM-001).</span>
+                    </div>
+                    <button class="btn btn-primary" id="searchBtn" style="padding:10px 20px;">Search</button>
+                    <button class="btn btn-secondary" id="resetBtn" style="padding:10px 20px;">Reset</button>
+                </div>
+            </section>
+
+            <!-- QUICK ACCESS TABLE -->
+            <section class="table-card" id="quickAccessTable">
+                <div style="padding:16px 20px;border-bottom:1px solid var(--border-color);display:flex;align-items:center;justify-content:space-between;">
+                    <div>
+                        <div style="font-size:14px;font-weight:700;color:var(--text-primary);">Active Teams</div>
+                        <div style="font-size:11px;color:var(--text-secondary);margin-top:2px;">Click View to load a team workspace</div>
+                    </div>
+                    <span class="badge status-resolved" id="activeTeamCount">--</span>
+                </div>
+                <div class="table-responsive" style="overflow-x:auto;">
+                    <table class="custom-table" style="min-width:620px;">
+                        <thead>
+                            <tr>
+                                <th>Team ID</th>
+                                <th>Team Name</th>
+                                <th>Active Projects</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="quickTeamsBody"></tbody>
+                    </table>
+                </div>
+                <div class="table-footer">
+                    <span class="table-info" id="quickTableInfo"></span>
+                    <ul class="pagination" id="quickPagination"></ul>
+                </div>
+            </section>
+
+            <!-- EMPTY STATE -->
+            <div id="emptyState">
+                <div class="empty-state">
+                    <span class="empty-state-icon">&#9750;</span>
+                    <span class="empty-state-title">Search for a Team Workspace</span>
+                    <p class="empty-state-desc">Enter a Team ID above or click View on any team above to load the full 360° workspace view.</p>
+                </div>
+            </div>
+
+            <!-- WORKSPACE (hidden until search) -->
+            <div id="workspaceContent" style="display:none;flex-direction:column;gap:24px;">
+
+                <!-- TEAM INFO CARD -->
+                <section class="content-card" style="padding:20px 24px;">
+                    <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;">
+                        <div>
+                            <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px;">
+                                <span style="font-size:18px;font-weight:800;color:var(--text-primary);" id="wsTeamName">--</span>
+                                <span class="badge" id="wsStatusBadge">--</span>
+                            </div>
+                            <div style="display:flex;gap:24px;flex-wrap:wrap;">
+                                <span style="font-size:12px;color:var(--text-secondary);">ID: <strong id="wsTeamId" style="color:var(--primary-color);">--</strong></span>
+                                <span style="font-size:12px;color:var(--text-secondary);">Project: <strong id="wsProject">--</strong></span>
+                            </div>
+                        </div>
+                        <div style="display:flex;gap:8px;flex-wrap:wrap;">
+                            <button class="btn btn-secondary" id="btnRaiseTicket" style="font-size:12px;padding:8px 16px;">Raise Ticket</button>
+                            <button class="btn btn-secondary" id="btnAddRequest" style="font-size:12px;padding:8px 16px;">&#43; Add Request</button>
+                            <button class="btn btn-primary" id="btnPrint" style="font-size:12px;padding:8px 16px;">Print Summary</button>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- KPI CARDS -->
+                <section class="stats-grid" style="grid-template-columns:repeat(4,1fr);">
+                    <div class="stat-card">
+                        <div class="stat-details">
+                            <span class="stat-value" id="kpiBorrowed">0</span>
+                            <span class="stat-label">Borrowed Items</span>
+                            <span class="stat-subtext">Currently with team</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-details">
+                            <span class="stat-value" id="kpiPending">0</span>
+                            <span class="stat-label">Pending Requests</span>
+                            <span class="stat-subtext">Awaiting approval</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-details">
+                            <span class="stat-value" id="kpiDueSoon">0</span>
+                            <span class="stat-label">Due Soon</span>
+                            <span class="stat-subtext">Within 7 days</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-details">
+                            <span class="stat-value" id="kpiOverdue" style="color:#DC2626;">0</span>
+                            <span class="stat-label">Overdue Returns</span>
+                            <span class="stat-subtext">Past due date</span>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- MAIN GRID: LEFT tables + RIGHT timeline -->
+                <div style="display:grid;grid-template-columns:1fr 300px;gap:24px;align-items:start;">
+
+                    <div style="display:flex;flex-direction:column;gap:24px;">
+
+                        <!-- BORROWED EQUIPMENT TABLE -->
+                        <section class="table-card">
+                            <div style="padding:16px 20px;border-bottom:1px solid var(--border-color);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;">
+                                <div>
+                                    <div style="font-size:14px;font-weight:700;">Borrowed Equipment</div>
+                                    <div style="font-size:11px;color:var(--text-secondary);margin-top:2px;">Items currently issued to this team</div>
+                                </div>
+                                <div style="display:flex;gap:8px;align-items:center;">
+                                    <select id="eqStatusFilter" class="form-control" style="padding:6px 10px;font-size:12px;width:auto;">
+                                        <option value="All">All Status</option>
+                                        <option value="Assigned">With Team</option>
+                                        <option value="Overdue">Overdue</option>
+                                        <option value="Returned">Returned</option>
+                                    </select>
+                                    <div class="search-wrapper" style="max-width:160px;">
+                                        <span class="search-icon">&#128269;</span>
+                                        <input type="text" id="eqSearch" class="search-input" placeholder="Search...">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="table-responsive" style="overflow-x:auto;">
+                                <table class="custom-table" style="min-width:680px;">
+                                    <thead>
+                                        <tr>
+                                            <th>Eq. ID</th>
+                                            <th>Equipment Name</th>
+                                            <th class="sortable" data-eq-sort="bookDate">Booking Date &#8597;</th>
+                                            <th class="sortable" data-eq-sort="returnDate">Return Date &#8597;</th>
+                                            <th>Slot</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="eqTableBody"></tbody>
+                                </table>
+                            </div>
+                            <div class="table-footer">
+                                <span class="table-info" id="eqInfo">--</span>
+                                <ul class="pagination" id="eqPagination"></ul>
+                            </div>
+                        </section>
+
+                        <!-- COMPONENT REQUESTS TABLE -->
+                        <section class="table-card">
+                            <div style="padding:16px 20px;border-bottom:1px solid var(--border-color);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;">
+                                <div>
+                                    <div style="font-size:14px;font-weight:700;">Component Requests</div>
+                                    <div style="font-size:11px;color:var(--text-secondary);margin-top:2px;">All component requests raised by this team</div>
+                                </div>
+                                <select id="reqStatusFilter" class="form-control" style="padding:6px 10px;font-size:12px;width:auto;">
+                                    <option value="All">All Status</option>
+                                    <option value="Pending">Pending</option>
+                                    <option value="Approved">Approved</option>
+                                    <option value="Rejected">Rejected</option>
+                                </select>
+                            </div>
+                            <div class="table-responsive" style="overflow-x:auto;">
+                                <table class="custom-table" style="min-width:560px;">
+                                    <thead>
+                                        <tr>
+                                            <th>Request ID</th>
+                                            <th>Item Name</th>
+                                            <th>Qty</th>
+                                            <th>Request Date</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="reqTableBody"></tbody>
+                                </table>
+                            </div>
+                            <div class="table-footer">
+                                <span class="table-info" id="reqInfo">--</span>
+                                <ul class="pagination" id="reqPagination"></ul>
+                            </div>
+                        </section>
+
+                    </div>
+
+                    <!-- ACTIVITY TIMELINE -->
+                    <section class="content-card" style="padding:0;overflow:hidden;">
+                        <div style="padding:16px 20px;border-bottom:1px solid var(--border-color);">
+                            <div style="font-size:14px;font-weight:700;">Recent Activity</div>
+                            <div style="font-size:11px;color:var(--text-secondary);margin-top:2px;">Latest actions — newest first</div>
+                        </div>
+                        <div id="timelineContainer" style="padding:20px 16px;display:flex;flex-direction:column;gap:0;max-height:640px;overflow-y:auto;"></div>
+                    </section>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <footer class="page-footer">&copy; 2025 RPLMS - Rapid Prototyping Lab Management System. All rights reserved.</footer>
+
+    </main>
+</div>
+
+<!-- ── Add Component Request Modal ───────────────────────────────────────── -->
+<div id="addRequestModal" style="display:none;position:fixed;inset:0;background:rgba(15,23,42,0.55);z-index:10000;align-items:center;justify-content:center;">
+    <div style="background:var(--bg-card);border-radius:16px;padding:28px 32px;width:100%;max-width:480px;box-shadow:0 20px 60px rgba(15,23,42,0.2);margin:16px;position:relative;">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;">
+            <div>
+                <div style="font-size:16px;font-weight:800;color:var(--text-primary);">&#43; Add Component Request</div>
+                <div style="font-size:12px;color:var(--text-secondary);margin-top:2px;">Submit a new material request for this team</div>
+            </div>
+            <button id="closeAddRequestModal" style="background:none;border:none;font-size:20px;cursor:pointer;color:var(--text-secondary);line-height:1;padding:4px;">&times;</button>
+        </div>
+        <form id="addRequestForm" novalidate>
+            <div class="form-grid" style="grid-template-columns:1fr 1fr;gap:16px;">
+                <div class="form-group form-group-full" style="grid-column:span 2;margin-bottom:0;">
+                    <label class="form-label" for="reqItemName">Item Name <span class="required-star">*</span></label>
+                    <input type="text" id="reqItemName" name="item" class="form-control" placeholder="e.g. Arduino Uno R3" maxlength="80">
+                    <span class="invalid-feedback" id="reqItemErr"></span>
+                </div>
+                <div class="form-group" style="margin-bottom:0;">
+                    <label class="form-label" for="reqQty">Quantity <span class="required-star">*</span></label>
+                    <input type="number" id="reqQty" name="qty" class="form-control" placeholder="e.g. 5" min="1" max="999">
+                    <span class="invalid-feedback" id="reqQtyErr"></span>
+                </div>
+                <div class="form-group" style="margin-bottom:0;">
+                    <label class="form-label" for="reqDate">Required By <span class="required-star">*</span></label>
+                    <input type="date" id="reqDate" name="date" class="form-control">
+                    <span class="invalid-feedback" id="reqDateErr"></span>
+                </div>
+                <div class="form-group form-group-full" style="grid-column:span 2;margin-bottom:0;">
+                    <label class="form-label" for="reqPurpose">Purpose / Notes <span class="required-star">*</span></label>
+                    <textarea id="reqPurpose" name="purpose" class="form-control" rows="3" placeholder="Briefly describe why this component is needed..." maxlength="200" style="resize:vertical;"></textarea>
+                    <span class="invalid-feedback" id="reqPurposeErr"></span>
+                </div>
+            </div>
+            <div style="display:flex;gap:10px;justify-content:flex-end;margin-top:20px;">
+                <button type="button" id="cancelAddRequest" class="btn btn-secondary">&times; Cancel</button>
+                <button type="submit" class="btn btn-primary" id="submitAddRequest">&#10003; Submit Request</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script src="js/common.js"></script>
+<script src="js/teams.js"></script>
+<script>
+    renderBaseLayout("teams");
+
+    // ── Add Component Request Modal ─────────────────────────────────────────
+    const addModal   = document.getElementById("addRequestModal");
+    const addForm    = document.getElementById("addRequestForm");
+
+    function openAddRequestModal() {
+        if (!window._currentTeamIdGlobal) {
+            showToast("Please load a team workspace first.", "warn");
+            return;
+        }
+        // Set min date to today
+        const today = new Date().toISOString().slice(0, 10);
+        document.getElementById("reqDate").min = today;
+        document.getElementById("reqDate").value = "";
+        document.getElementById("reqItemName").value = "";
+        document.getElementById("reqQty").value = "";
+        document.getElementById("reqPurpose").value = "";
+        // Clear errors
+        ["reqItemErr","reqQtyErr","reqDateErr","reqPurposeErr"].forEach(id => {
+            const el = document.getElementById(id);
+            el.textContent = ""; el.style.display = "none";
+        });
+        ["reqItemName","reqQty","reqDate","reqPurpose"].forEach(id => {
+            document.getElementById(id).classList.remove("is-invalid");
+        });
+        addModal.style.display = "flex";
+    }
+
+    function closeAddRequestModal() {
+        addModal.style.display = "none";
+    }
+
+    document.getElementById("closeAddRequestModal").addEventListener("click", closeAddRequestModal);
+    document.getElementById("cancelAddRequest").addEventListener("click", closeAddRequestModal);
+    addModal.addEventListener("click", e => { if (e.target === addModal) closeAddRequestModal(); });
+
+    function showFieldErr(inputId, errId, msg) {
+        const inp = document.getElementById(inputId);
+        const err = document.getElementById(errId);
+        inp.classList.add("is-invalid");
+        err.textContent = msg;
+        err.style.display = "block";
+        return false;
+    }
+    function clearFieldErr(inputId, errId) {
+        document.getElementById(inputId).classList.remove("is-invalid");
+        const err = document.getElementById(errId);
+        err.textContent = ""; err.style.display = "none";
+    }
+
+    addForm.addEventListener("submit", function(e) {
+        e.preventDefault();
+        let valid = true;
+
+        const item = document.getElementById("reqItemName").value.trim();
+        const qty  = parseInt(document.getElementById("reqQty").value, 10);
+        const date = document.getElementById("reqDate").value;
+        const purpose = document.getElementById("reqPurpose").value.trim();
+        const today = new Date().toISOString().slice(0, 10);
+
+        clearFieldErr("reqItemName", "reqItemErr");
+        clearFieldErr("reqQty",     "reqQtyErr");
+        clearFieldErr("reqDate",    "reqDateErr");
+        clearFieldErr("reqPurpose", "reqPurposeErr");
+
+        if (!item)                           valid = showFieldErr("reqItemName", "reqItemErr",   "Item name is required.");
+        else if (item.length < 3)            valid = showFieldErr("reqItemName", "reqItemErr",   "Must be at least 3 characters.");
+        if (isNaN(qty) || qty < 1)           valid = showFieldErr("reqQty",     "reqQtyErr",    "Enter a valid quantity (min 1).");
+        else if (qty > 999)                  valid = showFieldErr("reqQty",     "reqQtyErr",    "Quantity cannot exceed 999.");
+        if (!date)                           valid = showFieldErr("reqDate",    "reqDateErr",   "Required by date is required.");
+        else if (date < today)               valid = showFieldErr("reqDate",    "reqDateErr",   "Date must be today or in the future.");
+        if (!purpose)                        valid = showFieldErr("reqPurpose", "reqPurposeErr","Purpose / notes is required.");
+        else if (purpose.length < 10)        valid = showFieldErr("reqPurpose", "reqPurposeErr","Please provide at least 10 characters.");
+
+        if (!valid) return;
+
+        // Save to DB
+        const db = getDB();
+        const teamId = window._currentTeamIdGlobal;
+        const team = db.teams.find(t => t.id === teamId);
+        const nextNum = db.materialRequests.length + 1;
+        const newReq = {
+            id:       `REQ-${String(nextNum).padStart(3,"0")}`,
+            teamId:   teamId,
+            teamName: team ? team.name : teamId,
+            item:     item,
+            qty:      qty,
+            status:   "Pending",
+            date:     date,
+            purpose:  purpose
+        };
+        db.materialRequests.push(newReq);
+        setDB(db);
+
+        closeAddRequestModal();
+        showToast(`Request for "${item}" submitted successfully!`, "success");
+
+        // Reload workspace to reflect new request
+        const updatedDb = getDB();
+        const updatedTeam = updatedDb.teams.find(t => t.id === teamId);
+        if (updatedTeam && typeof loadWorkspaceGlobal === "function") {
+            loadWorkspaceGlobal(updatedTeam, updatedDb);
+        }
+    });
+
+    // Expose openAddRequestModal for the button in teams.js
+    window.openAddRequestModal = openAddRequestModal;
+</script>
+</body>
+</html>

@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - RPLMS</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* ── Banner ─────────────────────────────────────────────────────── */
+        .db-banner {
+            background: linear-gradient(135deg, #3730A3 0%, #4F3CF5 50%, #7C3AED 100%);
+            border-radius: 16px;
+            padding: 28px 36px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 24px;
+            color: #fff;
+            position: relative;
+            overflow: hidden;
+        }
+        .db-banner::before {
+            content: '';
+            position: absolute;
+            top: -60px; right: -60px;
+            width: 220px; height: 220px;
+            background: rgba(255,255,255,0.04);
+            border-radius: 50%;
+        }
+        .db-banner::after {
+            content: '';
+            position: absolute;
+            bottom: -80px; right: 120px;
+            width: 280px; height: 280px;
+            background: rgba(255,255,255,0.03);
+            border-radius: 50%;
+        }
+        .db-banner-left { position: relative; z-index: 1; }
+        .db-banner-greeting {
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 1.2px;
+            text-transform: uppercase;
+            opacity: 0.65;
+            margin-bottom: 6px;
+        }
+        .db-banner-title {
+            font-size: 24px;
+            font-weight: 800;
+            letter-spacing: -0.4px;
+            margin-bottom: 6px;
+        }
+        .db-banner-sub {
+            font-size: 13px;
+            opacity: 0.65;
+        }
+        .db-banner-pills {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            position: relative;
+            z-index: 1;
+        }
+        .db-pill {
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 12px;
+            padding: 14px 20px;
+            text-align: center;
+            min-width: 100px;
+            backdrop-filter: blur(4px);
+        }
+        .db-pill-val {
+            display: block;
+            font-size: 28px;
+            font-weight: 800;
+            line-height: 1;
+            letter-spacing: -1px;
+        }
+        .db-pill-lbl {
+            display: block;
+            font-size: 11px;
+            font-weight: 500;
+            opacity: 0.7;
+            margin-top: 5px;
+            white-space: nowrap;
+        }
+        .db-pill.pill-danger { background: rgba(239,68,68,0.2); border-color: rgba(239,68,68,0.3); }
+        .db-pill.pill-warn   { background: rgba(245,158,11,0.2); border-color: rgba(245,158,11,0.3); }
+
+        /* ── KPI Grid ───────────────────────────────────────────────────── */
+        .db-kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+        }
+        .db-kpi {
+            background: #fff;
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            padding: 22px 24px 18px;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.18s, box-shadow 0.18s;
+        }
+        .db-kpi:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 32px rgba(15,23,42,0.09);
+        }
+        .db-kpi-accent {
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+            border-radius: 14px 14px 0 0;
+        }
+        .db-kpi.a-purple .db-kpi-accent { background: linear-gradient(90deg,#7C3AED,#4F3CF5); }
+        .db-kpi.a-blue   .db-kpi-accent { background: linear-gradient(90deg,#2563EB,#38BDF8); }
+        .db-kpi.a-orange .db-kpi-accent { background: linear-gradient(90deg,#EA580C,#F59E0B); }
+        .db-kpi.a-green  .db-kpi-accent { background: linear-gradient(90deg,#16A34A,#34D399); }
+
+        .db-kpi-top {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            margin-bottom: 16px;
+        }
+        .db-kpi-icon {
+            width: 44px; height: 44px;
+            border-radius: 10px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 18px;
+        }
+        .db-kpi.a-purple .db-kpi-icon { background:#F3E8FF; color:#7C3AED; }
+        .db-kpi.a-blue   .db-kpi-icon { background:#DBEAFE; color:#2563EB; }
+        .db-kpi.a-orange .db-kpi-icon { background:#FFEDD5; color:#EA580C; }
+        .db-kpi.a-green  .db-kpi-icon { background:#DCFCE7; color:#16A34A; }
+
+        .db-kpi-badge {
+            font-size: 10px;
+            font-weight: 700;
+            padding: 3px 8px;
+            border-radius: 20px;
+        }
+        .db-kpi-badge.up   { background:#DCFCE7; color:#16A34A; }
+        .db-kpi-badge.down { background:#FEE2E2; color:#EF4444; }
+        .db-kpi-badge.warn { background:#FEF3C7; color:#B45309; }
+        .db-kpi-badge.info { background:#DBEAFE; color:#2563EB; }
+
+        .db-kpi-val {
+            font-size: 36px;
+            font-weight: 800;
+            color: var(--text-primary);
+            line-height: 1;
+            letter-spacing: -1.5px;
+            margin-bottom: 6px;
+        }
+        .db-kpi-label {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+        .db-kpi-sub {
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin-top: 2px;
+        }
+
+        /* ── Bottom Grid ────────────────────────────────────────────────── */
+        .db-bottom {
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            gap: 20px;
+        }
+        .db-card {
+            background: #fff;
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            overflow: hidden;
+        }
+        .db-card-head {
+            padding: 20px 24px 16px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .db-card-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+        .db-card-sub {
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin-top: 2px;
+        }
+        .db-card-link {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--primary-color);
+            text-decoration: none;
+            white-space: nowrap;
+        }
+        .db-card-link:hover { text-decoration: underline; }
+
+        .db-tbl {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+        .db-tbl th {
+            background: #F8FAFC;
+            padding: 11px 20px;
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            border-bottom: 1px solid var(--border-color);
+            text-align: left;
+            white-space: nowrap;
+            text-transform: uppercase;
+            letter-spacing: 0.4px;
+        }
+        .db-tbl td {
+            padding: 13px 20px;
+            border-bottom: 1px solid var(--border-color);
+            color: var(--text-primary);
+            vertical-align: middle;
+        }
+        .db-tbl tr:last-child td { border-bottom: none; }
+        .db-tbl tbody tr:hover td { background: #FAFBFF; }
+
+        .overdue-dot {
+            display: inline-block;
+            width: 7px; height: 7px;
+            border-radius: 50%;
+            background: #EF4444;
+            margin-right: 6px;
+            vertical-align: middle;
+            animation: pulse 1.6s infinite;
+        }
+        @keyframes pulse {
+            0%,100% { opacity:1; }
+            50% { opacity:0.3; }
+        }
+
+        .inv-status-dot {
+            display: inline-block;
+            width: 7px; height: 7px;
+            border-radius: 50%;
+            margin-right: 6px;
+            vertical-align: middle;
+        }
+        .dot-maintenance { background: #F59E0B; }
+        .dot-repairing   { background: #EF4444; }
+
+        .days-overdue {
+            font-size: 11px;
+            font-weight: 700;
+            color: #EF4444;
+            background: #FEE2E2;
+            padding: 2px 7px;
+            border-radius: 4px;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+<div class="app-container">
+    <aside class="sidebar"></aside>
+    <main class="main-content">
+
+        <header class="header">
+            <div class="header-left">
+                <button class="sidebar-toggle" id="sidebarToggleBtn">&#9776;</button>
+                <div class="page-title-area">
+                    <h1 class="page-title">Dashboard</h1>
+                    <ul class="breadcrumbs"><li>Home</li><li>Dashboard</li></ul>
+                </div>
+            </div>
+            <div class="header-right">
+                <button class="header-icon-btn">
+                    <span class="icon">&#128276;</span>
+                    <span class="icon-badge">3</span>
+                </button>
+                <div class="header-date-widget"></div>
+            </div>
+        </header>
+
+        <div class="page-content-wrapper">
+
+            <!-- BANNER -->
+            <div class="db-banner">
+                <div class="db-banner-left">
+                    <div class="db-banner-greeting" id="bannerGreeting">Good morning</div>
+                    <div class="db-banner-title" id="bannerName">Dr. Priya Sharma</div>
+                    <div class="db-banner-sub" id="bannerSub">Here is your lab overview for today.</div>
+                </div>
+                <div class="db-banner-pills">
+                    <div class="db-pill">
+                        <span class="db-pill-val" id="pillTeams">--</span>
+                        <span class="db-pill-lbl">Active Teams</span>
+                    </div>
+                    <div class="db-pill pill-warn">
+                        <span class="db-pill-val" id="pillPending">--</span>
+                        <span class="db-pill-lbl">Pending Requests</span>
+                    </div>
+                    <div class="db-pill pill-danger">
+                        <span class="db-pill-val" id="pillOverdue">--</span>
+                        <span class="db-pill-lbl">Overdue Returns</span>
+                    </div>
+                    <div class="db-pill pill-danger">
+                        <span class="db-pill-val" id="pillTickets">--</span>
+                        <span class="db-pill-lbl">Open Tickets</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- KPI CARDS -->
+            <div class="db-kpi-grid">
+                <div class="db-kpi a-purple">
+                    <div class="db-kpi-accent"></div>
+                    <div class="db-kpi-top">
+                        <div class="db-kpi-icon">&#10065;</div>
+                        <span class="db-kpi-badge info" id="kpiBadge1">--</span>
+                    </div>
+                    <div class="db-kpi-val" id="kpiInventory">--</div>
+                    <div class="db-kpi-label">Total Inventory</div>
+                    <div class="db-kpi-sub">Equipment &amp; Components</div>
+                </div>
+                <div class="db-kpi a-orange">
+                    <div class="db-kpi-accent"></div>
+                    <div class="db-kpi-top">
+                        <div class="db-kpi-icon">&#9888;</div>
+                        <span class="db-kpi-badge warn" id="kpiBadge2">--</span>
+                    </div>
+                    <div class="db-kpi-val" id="kpiUnavailable">--</div>
+                    <div class="db-kpi-label">Unavailable Items</div>
+                    <div class="db-kpi-sub">Maintenance &amp; Repair</div>
+                </div>
+                <div class="db-kpi a-blue">
+                    <div class="db-kpi-accent"></div>
+                    <div class="db-kpi-top">
+                        <div class="db-kpi-icon">&#9998;</div>
+                        <span class="db-kpi-badge up" id="kpiBadge3">--</span>
+                    </div>
+                    <div class="db-kpi-val" id="kpiReqMonth">--</div>
+                    <div class="db-kpi-label">Requests This Month</div>
+                    <div class="db-kpi-sub">Component requests raised</div>
+                </div>
+                <div class="db-kpi a-green">
+                    <div class="db-kpi-accent"></div>
+                    <div class="db-kpi-top">
+                        <div class="db-kpi-icon">&#10003;</div>
+                        <span class="db-kpi-badge up" id="kpiBadge4">--</span>
+                    </div>
+                    <div class="db-kpi-val" id="kpiResolved">--</div>
+                    <div class="db-kpi-label">Resolved Tickets</div>
+                    <div class="db-kpi-sub">Issues closed to date</div>
+                </div>
+            </div>
+
+            <!-- BOTTOM TABLES -->
+            <div class="db-bottom">
+
+                <div class="db-card">
+                    <div class="db-card-head">
+                        <div>
+                            <div class="db-card-title"><span class="overdue-dot"></span>Overdue Returns</div>
+                            <div class="db-card-sub">Equipment not returned past due date</div>
+                        </div>
+                        <a href="material-returns.html" class="db-card-link">View All</a>
+                    </div>
+                    <table class="db-tbl">
+                        <thead>
+                            <tr>
+                                <th>Return ID</th>
+                                <th>Team</th>
+                                <th>Item</th>
+                                <th>Due Date</th>
+                                <th>Overdue</th>
+                            </tr>
+                        </thead>
+                        <tbody id="overdueTable"></tbody>
+                    </table>
+                </div>
+
+                <div class="db-card">
+                    <div class="db-card-head">
+                        <div>
+                            <div class="db-card-title">Inventory Attention</div>
+                            <div class="db-card-sub">Items under maintenance or repair</div>
+                        </div>
+                        <a href="inventory.html" class="db-card-link">View All</a>
+                    </div>
+                    <table class="db-tbl">
+                        <thead>
+                            <tr>
+                                <th>Item ID</th>
+                                <th>Name</th>
+                                <th>Location</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="attentionTable"></tbody>
+                    </table>
+                </div>
+
+            </div>
+
+        </div>
+
+        <footer class="page-footer">
+            &copy; 2025 RPLMS - Rapid Prototyping Lab Management System. All rights reserved.
+        </footer>
+
+    </main>
+</div>
+
+<script src="js/common.js"></script>
+<script src="js/dashboard.js"></script>
+<script>renderBaseLayout("dashboard");</script>
+</body>
+</html>
