@@ -1,4 +1,3 @@
-
 // Update faculty name in UI
 document.addEventListener("DOMContentLoaded", () => {
     const headerNameNode = document.querySelector(".header-right h4");
@@ -998,18 +997,22 @@ function openReviewModal(teamId, stageNo, mode) {
         return;
     }
 
-    const historyHtml = stage.history.length
-        ? stage.history.map(item => {
-            return `
-                <div class="version-item">
-                    <b>Version ${item.version}</b>
-                    <p>Submitted: ${item.submittedDate}</p>
-                    <p>Reviewed: ${item.reviewedDate}</p>
-                    <p>Reviewer: ${item.reviewer}</p>
-                    <p>Status: ${item.status}</p>
-                </div>
-            `;
-        }).join("")
+    // Show only the CURRENT version's record, not every past version.
+    // stage.history may still contain older/superseded entries (e.g. from
+    // a rework cycle) — we only want the one matching stage.version.
+    const currentHistoryEntry = stage.history.find(item => item.version === stage.version)
+        || stage.history[stage.history.length - 1];
+
+    const historyHtml = currentHistoryEntry
+        ? `
+            <div class="version-item">
+                <b>Version ${currentHistoryEntry.version}</b>
+                <p>Submitted: ${currentHistoryEntry.submittedDate}</p>
+                <p>Reviewed: ${currentHistoryEntry.reviewedDate || "-"}</p>
+                <p>Reviewer: ${currentHistoryEntry.reviewer || "-"}</p>
+                <p>Status: ${currentHistoryEntry.status}</p>
+            </div>
+        `
         : `<p class="muted">No submission history.</p>`;
 
     const reviewActions = mode === "review"
@@ -1089,19 +1092,30 @@ function reviewSubmission(teamId, stageNo, newStatus) {
     const comment = commentInput ? commentInput.value.trim() : "";
 
     const reviewedDate = todayDate();
+    const currentVersion = stage.version;
 
     stage.status = newStatus;
     stage.reviewer = "Dr. Faculty Name";
     stage.reviewedOn = reviewedDate;
     stage.comment = comment || "-";
 
-    stage.history.push({
-        version: stage.version,
-        submittedDate: stage.uploadedOn,
-        reviewedDate: reviewedDate,
-        reviewer: "Dr. Faculty Name",
-        status: newStatus
-    });
+    // Update the history record for the CURRENT version instead of always
+    // pushing a new one. Without this, re-opening the modal and clicking
+    // Approve/Reject/Rework again on the same version created duplicate
+    // "Version 1" entries in the history list.
+    let historyEntry = stage.history.find(item => item.version === currentVersion);
+
+    if (!historyEntry) {
+        historyEntry = {
+            version: currentVersion,
+            submittedDate: stage.uploadedOn
+        };
+        stage.history.push(historyEntry);
+    }
+
+    historyEntry.reviewedDate = reviewedDate;
+    historyEntry.reviewer = "Dr. Faculty Name";
+    historyEntry.status = newStatus;
 
     if (newStatus === "Rejected" || newStatus === "Rework Required") {
         stage.version += 1;
